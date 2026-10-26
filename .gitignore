@@ -41,6 +41,7 @@ yarn-error.log*
 next-env.d.ts
 
 web/node_modules/
+web/.next/
 backend/__pycache__/
 backend/.venv/
 backend/venv/
