@@ -30,7 +30,7 @@ export default function Footer() {
             <li>WhatsApp: <a href="https://wa.me/25769270296"><span className="todo">Chat with us</span></a></li>
             <li>Email: <a href="mailto:mfuranzimagerard028@gmail.com"><span className="todo">mfuranzimagerard028@gmail.com</span></a></li>
             <li>Studio: <span className="todo">Gihanga, Burundi</span></li>
-            <li><a href="https://www.google.com/maps/search/XXX+Commune+Gihanga,+Secteur,+Gihanga,+Burundi/@-3.1906,29.302,17z?hl=en&entry=ttu&g_ep=EgoyMDI2MTAxMy4wIKXMDSoASAFQAw%3D%3D"><span className="todo">Get directions (map link)</span></a></li>
+            <li>click to <a href="https://www.google.com/maps/search/XXX+Commune+Gihanga,+Secteur,+Gihanga,+Burundi/@-3.1906,29.302,17z?hl=en&entry=ttu&g_ep=EgoyMDI2MTAxMy4wIKXMDSoASAFQAw%3D%3D">Get directions</a></li>
           </ul>
         </div>
 
@@ -43,8 +43,8 @@ export default function Footer() {
           </ul>
           <h4 style={{ marginTop: 18 }}>Follow</h4>
           <div className="social">
-            <a href="#" className="ig" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
-            <a href="#" className="fb" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/mfuranzima12?xtok=OGFibTJpOW5jd2U2" className="ig" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=100090223424913" className="fb" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
             <a href="#" className="tt" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i className="fa-brands fa-tiktok"></i></a>
             <a href="#" className="yt" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i className="fa-brands fa-youtube"></i></a>
           </div> 

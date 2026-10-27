@@ -18,6 +18,10 @@ export default function BookingForm({ services }: { services: Service[] }) {
 
     const data = Object.fromEntries(new FormData(form).entries());
 
+        // check terms agreement
+    if (!data.terms_agreement) {
+      throw new Error("You must agree to Terms, Privacy and Licensing.");
+    }
     try {
       const res = await fetch("/api/book", {
         method: "POST",
@@ -38,10 +42,11 @@ export default function BookingForm({ services }: { services: Service[] }) {
     return (
       <div className="booking-form" role="status">
         <h2>Thank you!</h2>
-        <p>Your booking request has been sent. We will reply soon to confirm availability.</p>
+        <p>Your booking request has been sent. I will reply soon to confirm availability.</p>
       </div>
     );
   }
+
 
   return (
     <form className="booking-form" onSubmit={onSubmit}>
@@ -65,6 +70,18 @@ export default function BookingForm({ services }: { services: Service[] }) {
 
       {status === "error" && <p role="alert" style={{ color: "rgb(250, 11, 11)" }}>{errorMsg}</p>}
 
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '10px', marginTop: '20px', marginBottom: '16px' }}>
+        <input 
+          type="checkbox" 
+          name="terms_agreement" 
+          id="agree" 
+          value="true"
+          style={{ width: '16px', height: '16px', accentColor: '#16a34a' }}
+        />
+        <label htmlFor="agree" style={{ fontSize: '14px', color: 'white', cursor: 'pointer', margin: 0 }}>
+         <p>I agree to <a href="/terms" target="_blank" style={{ textDecoration: 'underline', fontWeight: 600 }}>Terms</a>, <a href="/privacy" target="_blank" style={{ textDecoration: 'underline', fontWeight: 600 }}>Privacy</a> & <a href="/licensing" target="_blank" style={{ textDecoration: 'underline', fontWeight: 600 }}>Licensing</a></p>
+        </label>
+      </div>
       <button className="btn-green btn-lg" type="submit" disabled={status === "sending"}>
         {status === "sending" ? "Sending..." : "Send booking request"}
       </button>

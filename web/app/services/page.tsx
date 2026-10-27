@@ -8,7 +8,7 @@ export default function ServicesPage() {
     <main className="wrap">
       <h1 className="page-title">Services</h1>
       <p className="sub" style={{ color: "var(--muted)" }}>
-        Everything we offer. Pick one to book directly.
+        Everything I offer. Pick one to book directly.
       </p>
 
       {services.map((s: any) => (
@@ -16,10 +16,6 @@ export default function ServicesPage() {
           <h2>{s.title}</h2>
           <p>{s.long}</p>
           <p className="meta">Good for: {s.goodFor}</p>
-          <p className="meta">
-            Duration: {s.duration}
-            <span className="todo">add time</span>
-          </p>
           <Link className="btn-green" href={`/book?service=${s.id}`}>
             Book this service
           </Link>

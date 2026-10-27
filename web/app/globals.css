@@ -212,3 +212,9 @@ dialog.lightbox::backdrop { background: rgba(0,0,0,.8); }
 .social .fb { color: #1877f2; }
 .social .tt { color: #000; }
 .social .yt { color: #ff0000; }
+
+/*====== terms, privacy and licensing ===== */
+.text-sm {
+ font-size: 17px; 
+ position: relative; left: 24px;
+}
