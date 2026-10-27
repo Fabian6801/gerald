@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import { services } from "@/web/app/lib/services";
-import BookingForm from "@/web/app/book/BookingForm";
+import { services } from "../lib/services";
+import BookingForm from "../book/BookingForm";
 
 export const metadata = { title: "Book a session | Gerard Photo Studio" };
 

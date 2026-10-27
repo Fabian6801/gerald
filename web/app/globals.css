@@ -94,9 +94,10 @@ h1,h2,h3 { line-height: 1.2; }
 .marquee { overflow: hidden; border-radius: 12px; }
 .track { display: flex; width: max-content; animation: slide-left 45s linear infinite; }
 .marquee:hover .track, .marquee:focus-within .track { animation-play-state: paused; }
-.thumb { flex: none; width: clamp(150px,26vw,250px); aspect-ratio: 3/2; margin-right: 12px; padding: 0; border: 0; border-radius: 10px; overflow: hidden; background: var(--tile); cursor: pointer; transition: transform .2s; }
+.thumb { flex: none; width: clamp(150px,26vw,250px); aspect-ratio: 3/2; margin-right: 12px; padding: 0; border: 0; border-radius: 10px; overflow: hidden; background:
+var(--title); cursor: pointer; transition: transform .2s; }
 .thumb:hover { transform: scale(1.03); }
-.thumb img, .thumb .ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb img, .thumb .ph { width: 100%; height: 100%; object-fit: contain; display: block; }
 @keyframes slide-left { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
   .marquee { overflow-x: auto; }
@@ -154,8 +155,9 @@ dialog.lightbox::backdrop { background: rgba(0,0,0,.8); }
 .lb-close:hover, .lb-nav:hover { background: rgba(255,255,255,.26); }
 .lb-main { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "prev stage next"; gap: 10px; align-items: center; }
 .lb-prev { grid-area: prev; } .lb-next { grid-area: next; }
-.lb-stage { grid-area: stage; aspect-ratio: 3/2; background: #000; border-radius: 10px; overflow: hidden; display: grid; place-items: center; }
-.lb-stage img, .lb-stage .ph { width: 100%; height: 100%; }
+.lb-stage { grid-area: stage; position: relative; height: min(62vh, 620px); background: #0b1522; border-radius: 10px; overflow: hidden; }
+.lb-bg { position: absolute; inset: -30px; background-size: cover; background-position: center; filter: blur(40px) brightness(.4) saturate(1); }
+.lb-stage img, .lb-stage .ph { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
 .lb-stage img { object-fit: contain; }
 .lb-thumbs { display: flex; gap: 8px; overflow-x: auto; margin-top: 12px; padding-bottom: 4px; }
 .lb-thumbs button { flex: none; width: 76px; height: 52px; padding: 0; border: 2px solid transparent; border-radius: 6px; overflow: hidden; background: none; opacity: .6; cursor: pointer; }
