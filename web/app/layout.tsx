@@ -1,11 +1,13 @@
 import "./globals.css";
 import Header from "./components/header";
 import Footer from "./components/Footer";
+import { assets } from "@/app/lib/assets";
 
-export const metadata = {
+;export const metadata = {
   title: "Kim Gerard | Gerard Photo Studio",
   description:
     "Weddings, portraits, fashion, commercial, travel and event photography by Kim Gerard.",
+  icons: { icon: assets.icon, apple: assets.appleIcon },
 };
 
 const themeScript = `try{var t=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}`;

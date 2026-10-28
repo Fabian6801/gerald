@@ -58,8 +58,9 @@ h1,h2,h3 { line-height: 1.2; }
 
 /* ===== BRAND ROW ===== */
 .brand-row { display: flex; align-items: center; gap: 16px; margin: 30px 0 6px; padding: 0 8px; }
-.logo-box { position: relative; width: 64px; height: 64px; flex: none; border-radius: 14px; background: var(--tile); display: grid; place-items: center; font: 700 28px/1 Georgia,serif; overflow: hidden; }
-.logo-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+-box { position: relative; width: 64px; height: 64px; flex: none; border-radius: 14px; background: var(--tile); display: grid; place-items: center; font: 700 28px/1 Georgia,serif; overflow: hidden; }
+.logo-box { position: relative; width: 80px; height: 80px; flex: none; border-radius: 14px; background: var(--tile); overflow: hidden; }
+.logo-box video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.8); }
 .brand-row h1 { margin: 0; font-size: clamp(24px,5vw,36px); }
 .brand-row p { margin: 2px 0 0; color: var(--muted); }
 
@@ -94,10 +95,9 @@ h1,h2,h3 { line-height: 1.2; }
 .marquee { overflow: hidden; border-radius: 12px; }
 .track { display: flex; width: max-content; animation: slide-left 45s linear infinite; }
 .marquee:hover .track, .marquee:focus-within .track { animation-play-state: paused; }
-.thumb { flex: none; width: clamp(150px,26vw,250px); aspect-ratio: 3/2; margin-right: 12px; padding: 0; border: 0; border-radius: 10px; overflow: hidden; background:
-var(--title); cursor: pointer; transition: transform .2s; }
+.thumb { flex: none; width: clamp(170px, 18vw, 240px); aspect-ratio: 2 / 3; margin-right: 10px; padding: 0; border: 0; border-radius: 10px; overflow: hidden; background: var(--tile); cursor: pointer; transition: transform .2s; }
 .thumb:hover { transform: scale(1.03); }
-.thumb img, .thumb .ph { width: 100%; height: 100%; object-fit: contain; display: block; }
+.thumb img, .thumb .ph { display: block; width: 100%; height: 100%; object-fit: cover; }
 @keyframes slide-left { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
   .marquee { overflow-x: auto; }

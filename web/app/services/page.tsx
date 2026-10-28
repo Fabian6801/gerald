@@ -13,7 +13,7 @@ export default function ServicesPage() {
 
       {services.map((s: any) => (
         <article className="service-detail" id={s.id} key={s.id}>
-          <h2>{s.title}</h2>
+          <h2><strong>{s.title}</strong></h2>
           <p>{s.long}</p>
           <p className="meta">Good for: {s.goodFor}</p>
           <Link className="btn-green" href={`/book?service=${s.id}`}>

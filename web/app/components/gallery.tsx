@@ -152,8 +152,8 @@ export default function Gallery() {
             <div className="rail" key={cat.slug}>
               <h3>{cat.title}</h3>
               <div className="marquee">
-                <div className="track" style={{ animationDuration: `${countOf(cat) * 12}s` }}>
-                  {[0, 1].map((pass) =>
+                <div className="track" style={{ animationDuration: `${countOf(cat) * 24}s` }}>
+                  {[0, 1, 2, 3].map((pass) =>
                     Array.from({ length: countOf(cat) }, (_, i) => (
                       <button
                         key={`${pass}-${i}`}

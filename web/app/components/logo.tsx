@@ -1,28 +1,38 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef } from "react";
+import { assets } from "@/app/lib/assets";
 
 export default function Logo() {
-  const [loaded, setLoaded] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = true; // browsers only allow autoplay when the video is muted
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce) v.play().catch(() => {});
+  }, []);
 
   return (
     <div className="logo-box">
-      {!loaded && <span aria-hidden="true">G</span>}
-      {!failed && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src="/images/logo.png"
-          alt="Gerard Photo Studio logo"
-          ref={(el) => {
-            if (el && el.complete) {
-              if (el.naturalWidth === 0) setFailed(true);
-              else setLoaded(true);
-            }
-          }}
-          onLoad={() => setLoaded(true)}
-          onError={() => setFailed(true)}
-        />
-      )}
+      <video
+        ref={ref}
+        src={assets.logoVideo}
+        poster={assets.logoPoster}
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-label="Kim Gerard logo"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          transform: "scale(1.8)",
+        }}
+      />
     </div>
   );
 }
