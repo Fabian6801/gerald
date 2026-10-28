@@ -6,4 +6,5 @@ export const assets = {
   logoPoster: `${base}/logo-poster.jpg?v=1`,
   icon: `${base}/icon.png?v=1`,
   appleIcon: `${base}/apple-icon.png?v=1`,
+  gerardPhoto: `${base}/gerard.jpeg?v=1`,
 };

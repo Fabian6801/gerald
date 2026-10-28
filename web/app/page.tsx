@@ -2,6 +2,7 @@ import Link from "next/link";
 import { services } from "./lib/services";
 import Logo from "./components/logo";
 import Gallery from "./components/gallery";
+import { assets } from "@/app/lib/assets";
 
 export default function Home() {
   return (
@@ -42,9 +43,11 @@ export default function Home() {
         <h2 id="about-h">About Gerard photography</h2>
         <p className="sub">Everything you may want to know before you book.</p>
 
-        <div className="about-grid">
-          <div>
-            <h3>Who is GERARD</h3>
+        <div className="about-intro">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="about-photo" src={assets.gerardPhoto} alt="Kim Gerard, photographer" />
+          <div className="about-intro-text">
+            <h3>Who is GERARD </h3>
             <p>
              Hello,
               I’m Gérard.
@@ -52,7 +55,10 @@ export default function Home() {
 
               I’m available for local assignments and remote international photo-editing projects. Let’s talk about the images you want to create..
             </p>
-
+          </div>
+        </div>
+        <div className="about-grid">
+          <div>
             <h3>Why clients choose my work</h3>
             <ul>
               <li>Friendly direction and posing help, so you look natural, not stiff</li>

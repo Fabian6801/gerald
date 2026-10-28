@@ -7,8 +7,8 @@ type Item = { url: string; alt: string };
 type Row = { category: string| null; image_url: string | null; title: string | null; description: string | null; };
 
 const CATS: Cat[] = [
-  { slug: "weddings-portraits", title: "Weddings & Portraits", hue: 20 },
-  { slug: "travel-landscape", title: "Travel & Landscape", hue: 200 },
+  { slug: "weddings-dowry", title: "Weddings & dowry", hue: 20 },
+  { slug: "conference-events", title: "Conference & Events", hue: 200 },
   { slug: "fashion-commercial", title: "Fashion & Commercial", hue: 290 },
 ];
 
@@ -16,8 +16,8 @@ const CATS: Cat[] = [
 const PLACEHOLDERS = 8;
 
 const BLOCKS = [
-  { slug: "weddings-portraits", cls: "block-left", label: "Weddings & Portraits", aria: "Open Weddings and Portraits photos" },
-  { slug: "travel-landscape", cls: "block-right", label: "Travel & Landscape", aria: "Open Travel and Landscape photos" },
+  { slug: "weddings-dowry", cls: "block-left", label: "Weddings & dowry", aria: "Open Weddings and dowry photos" },
+  { slug: "conference-events", cls: "block-right", label: "Conference & Events", aria: "Open Conference and Events photos" },
   { slug: "fashion-commercial", cls: "block-mid", label: "Fashion & Commercial", aria: "Open Fashion and Commercial photos" },
 ];
 
@@ -25,8 +25,8 @@ const BLOCKS = [
 function toSlug(value: string | null): string | null {
   const v = (value || "").trim().toLowerCase();
   if (CATS.some((c) => c.slug === v)) return v;
-  if (["wedding", "weddings", "portrait", "portraits"].includes(v)) return "weddings-portraits";
-  if (["travel", "landscape", "landscapes"].includes(v)) return "travel-landscape";
+  if (["wedding", "weddings", "dowry"].includes(v)) return "weddings-dowry";
+  if (["conference", "event", "events"].includes(v)) return "conference-events";
   if (["fashion", "commercial", "product"].includes(v)) return "fashion-commercial";
   return null;
 }
@@ -82,7 +82,11 @@ export default function Gallery() {
     const grouped: Record<string, Item[]> = {};
     for (const row of data as Row[]) {
       const slug = toSlug(row.category);
-      if (!slug || !row.image_url) continue;
+      if (!slug) {
+        console.warn("Portfolio row skipped, unknown category:", row.category);
+        continue;
+      }
+      if (!row.image_url) continue;
       if (!grouped[slug]) grouped[slug] = [];
       grouped[slug].push({ url: row.image_url, alt: row.title || row.description || "" });
     }

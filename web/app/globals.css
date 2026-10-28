@@ -218,3 +218,9 @@ dialog.lightbox::backdrop { background: rgba(0,0,0,.8); }
  font-size: 17px; 
  position: relative; left: 24px;
 }
+
+/* ===== ABOUT INTRO (photo + text) ===== */
+.about-intro { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: start; margin-bottom: 36px; }
+@media (min-width: 720px) { .about-intro { grid-template-columns: minmax(220px, 340px) 1fr; gap: 36px; } }
+.about-photo { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 20%; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.3); }
+.about .about-intro-text h3 { margin: 0 0 8px; font-size: 22px; }
