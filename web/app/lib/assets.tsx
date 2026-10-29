@@ -7,4 +7,5 @@ export const assets = {
   icon: `${base}/icon.png?v=1`,
   appleIcon: `${base}/apple-icon.png?v=1`,
   gerardPhoto: `${base}/gerard.jpeg?v=1`,
+  hero: `${base}/herosection.jpeg?v=1`,
 };

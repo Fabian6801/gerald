@@ -2,6 +2,14 @@ import "./globals.css";
 import Header from "./components/header";
 import Footer from "./components/Footer";
 import { assets } from "@/app/lib/assets";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+  display: "swap",
+});
 
 ;export const metadata = {
   title: "Kim Gerard | Gerard Photo Studio",
@@ -14,7 +22,7 @@ const themeScript = `try{var t=localStorage.getItem("theme")||(matchMedia("(pref
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning datascrolling-behaviour="smooth">
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={poppins.variable}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <link
