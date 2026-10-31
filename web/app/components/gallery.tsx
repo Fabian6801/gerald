@@ -1,43 +1,52 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import { supabase } from "@/Lib/supabase";
 
-type Item = { url: string; alt: string; title: string };
-type Row = { image_url: string | null; title: string | null; description: string | null };
+type Item = { url: string; alt: string; title: string; group: string };
+type Row = {
+  image_url: string | null;
+  title: string | null;
+  description: string | null;
+  category: string | null;
+};
+type Status = "loading" | "ready" | "error";
 
-const FIRST = 8;        // photos shown before the "Show all" button
-const PLACEHOLDERS = 8; // coloured blocks shown while there are no photos yet
+const FIRST = 8; // photos shown before the "Show all" button
+const ORDER = ["Weddings", "Portraits", "Events", "Fashion", "Commercial", "Travel & Landscape"];
 
-function Photo({ item, i }: { item?: Item; i: number }) {
-  const [failedUrl, setFailedUrl] = useState<string | null>(null);
-  const alt = item?.alt || `Photo ${i + 1}`;
+// Turns the text in the table's "category" column into a tab name
+function groupOf(category: string | null): string {
+  const v = (category || "").trim().toLowerCase();
+  if (!v) return "More";
+  if (/wedding|bride|bridal|groom/.test(v)) return "Weddings";
+  if (/portrait|family|maternity|graduation|headshot/.test(v)) return "Portraits";
+  if (/event|birthday|conference|party|launch/.test(v)) return "Events";
+  if (/fashion|editorial|model/.test(v)) return "Fashion";
+  if (/commercial|product|brand|food/.test(v)) return "Commercial";
+  if (/travel|landscape|nature|scenic/.test(v)) return "Travel & Landscape";
+  return v.charAt(0).toUpperCase() + v.slice(1);
+}
 
-  // No photo yet, or it failed to load: show a coloured block
-  if (!item || failedUrl === item.url) {
+function Photo({ item, sizes }: { item: Item; sizes: string }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
     return (
-      <div className="ph" role="img" aria-label={alt}>
-        Photo {i + 1}
+      <div className="ph" role="img" aria-label={item.alt}>
+        Photo unavailable
       </div>
     );
   }
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={item.url}
-      alt={alt}
-      decoding="async"
-      ref={(el) => {
-        if (el && el.complete && el.naturalWidth === 0) setFailedUrl(item.url);
-      }}
-      onError={() => setFailedUrl(item.url)}
-    />
-  );
+  return <Image src={item.url} alt={item.alt} fill sizes={sizes} onError={() => setFailed(true)} />;
 }
 
 export default function Gallery() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [items, setItems] = useState<Item[]>([]);
+  const [status, setStatus] = useState<Status>("loading");
+  const [tab, setTab] = useState("All");
   const [showAll, setShowAll] = useState(false);
   const [idx, setIdx] = useState<number | null>(null);
 
@@ -48,14 +57,15 @@ export default function Gallery() {
     async function load() {
       const { data, error } = await supabase
         .from("portfolio")
-        .select("image_url, title, description")
+        .select("image_url, title, description, category")
         .order("created_at", { ascending: false });
 
-      if (error) {
-        console.error("Could not load portfolio:", error.message);
+      if (cancelled) return;
+      if (error || !data) {
+        console.error("Could not load portfolio:", error?.message);
+        setStatus("error");
         return;
       }
-      if (cancelled || !data) return;
 
       const list: Item[] = [];
       for (const row of data as Row[]) {
@@ -64,9 +74,11 @@ export default function Gallery() {
           url: row.image_url,
           alt: row.title || row.description || "Photograph by Kim Gerard",
           title: row.title || "Gallery",
+          group: groupOf(row.category),
         });
       }
       setItems(list);
+      setStatus("ready");
     }
 
     load();
@@ -75,16 +87,30 @@ export default function Gallery() {
     };
   }, []);
 
-  const total = items.length || PLACEHOLDERS;
+  const groups = useMemo(() => {
+    const present = Array.from(new Set(items.map((i) => i.group)));
+    const known = ORDER.filter((g) => present.includes(g));
+    const other = present.filter((g) => !ORDER.includes(g)).sort();
+    return [...known, ...other];
+  }, [items]);
+
+  const filtered = tab === "All" ? items : items.filter((i) => i.group === tab);
+  const total = filtered.length;
   const shown = showAll ? total : Math.min(FIRST, total);
-  const current = idx !== null ? items[idx] : undefined;
+  const current = idx !== null ? filtered[idx] : undefined;
 
   function openLB(i: number) {
     setIdx(i);
     dialogRef.current?.showModal();
   }
   function step(d: number) {
+    if (total === 0) return;
     setIdx((i) => (i === null ? i : (i + d + total) % total));
+  }
+  function chooseTab(g: string) {
+    setTab(g);
+    setShowAll(false);
+    setIdx(null);
   }
 
   useEffect(() => {
@@ -98,19 +124,39 @@ export default function Gallery() {
           <h2 id="gallery-h" className="sec-title">Gallery</h2>
           <p className="sec-sub">A selection of recent work</p>
 
-          <div className="gallery-grid">
-            {Array.from({ length: shown }, (_, i) => (
-              <button
-                key={i}
-                type="button"
-                className="gcell"
-                aria-label={`Open photo ${i + 1}`}
-                onClick={() => openLB(i)}
-              >
-                <Photo item={items[i]} i={i} />
-              </button>
-            ))}
-          </div>
+          {groups.length > 1 && (
+            <div className="gallery-tabs" role="group" aria-label="Filter photos by category">
+              {["All", ...groups].map((g) => (
+                <button key={g} type="button" className="tab" aria-pressed={tab === g} onClick={() => chooseTab(g)}>
+                  {g}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {status === "loading" && (
+            <div className="gallery-grid" aria-hidden="true">
+              {Array.from({ length: FIRST }, (_, i) => (
+                <div key={i} className="gcell skeleton" />
+              ))}
+            </div>
+          )}
+
+          {status !== "loading" && total === 0 && (
+            <p className="gallery-empty">
+              New photos are on their way. Please check back soon, or get in touch to see more of our work.
+            </p>
+          )}
+
+          {total > 0 && (
+            <div className="gallery-grid">
+              {Array.from({ length: shown }, (_, i) => (
+                <button key={`${tab}-${i}`} type="button" className="gcell" aria-label={`Open photo ${i + 1}: ${filtered[i].alt}`} onClick={() => openLB(i)}>
+                  <Photo item={filtered[i]} sizes="(max-width: 900px) 50vw, 25vw" />
+                </button>
+              ))}
+            </div>
+          )}
 
           {total > FIRST && (
             <div className="gallery-more">
@@ -136,7 +182,7 @@ export default function Gallery() {
         <div className="lb-head">
           <h2>
             <span className="lb-title">{current?.title ?? "Gallery"}</span>
-            <span className="lb-count">{idx !== null ? `${idx + 1} / ${total}` : ""}</span>
+            <span className="lb-count">{idx !== null && total > 0 ? `${idx + 1} / ${total}` : ""}</span>
           </h2>
           <button className="lb-close" type="button" aria-label="Close" onClick={() => dialogRef.current?.close()}>&times;</button>
         </div>
@@ -148,26 +194,28 @@ export default function Gallery() {
               <div
                 className="lb-bg"
                 aria-hidden="true"
-                style={{ backgroundImage: `url(${JSON.stringify(current.url)})` }}
+                style={{ backgroundImage: `url("/_next/image?url=${encodeURIComponent(current.url)}&w=256&q=75")` }}
               />
             )}
-            {idx !== null && <Photo key={idx} item={current} i={idx} />}
+            {current && idx !== null && (
+              <Photo key={`${tab}-${idx}`} item={current} sizes="(max-width: 980px) 90vw, 900px" />
+            )}
           </div>
           <button className="lb-nav lb-next" type="button" aria-label="Next photo" onClick={() => step(1)}>&#8250;</button>
         </div>
 
         <div className="lb-thumbs">
           {idx !== null &&
-            Array.from({ length: total }, (_, k) => (
+            filtered.map((it, k) => (
               <button
-                key={k}
+                key={`${tab}-${k}`}
                 ref={(el) => { thumbRefs.current[k] = el; }}
                 type="button"
                 className={k === idx ? "on" : ""}
                 aria-label={`Photo ${k + 1}`}
                 onClick={() => setIdx(k)}
               >
-                <Photo item={items[k]} i={k} />
+                <Photo item={it} sizes="76px" />
               </button>
             ))}
         </div>

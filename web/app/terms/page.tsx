@@ -1,14 +1,76 @@
+import { site } from "@/app/lib/site";
+
+export const metadata = {
+  title: "Terms & Licensing",
+  description: "Booking, payment, delivery, copyright and licensing terms for Gerard Photo Studio.",
+};
+
 export default function TermsPage() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16">
-      <h1 className="text-3xl font-bold mb-6">Terms and Conditions</h1>
-      <p>By booking with Gerard photography, you agree:</p>
-      <div className="space-y-4 mt-6">
-        <p><b>2. Rescheduling:</b> Please ,  realize that you should notify me as early as possible if you would like to reschedule .</p>
-        <p><b>3. Delivery:</b> Delivery will be done once we have agreed on the details.</p>
-        <p><b>4. Client Responsibility:</b> Be on time, inform about location access.</p>
-        <p><b>5. Agreement:</b> Checking the box on booking form means you accept these terms.</p>
-      </div>
+    <div className="wrap inner legal">
+      <h1 className="page-title">Terms &amp; Licensing</h1>
+      {site.lastUpdated && <p className="lead">Last updated: {site.lastUpdated}</p>}
+
+      <p>By sending a booking request, you agree to these terms.</p>
+
+      <h2>Bookings</h2>
+      <ul>
+        <li>A request is not a confirmed booking until we confirm it with you.</li>
+        {site.deposit && <li>Your date is reserved once we confirm and receive the deposit: {site.deposit}.</li>}
+        <li>Prices and what is included are agreed in writing before the session.</li>
+      </ul>
+
+      {site.payment && (
+        <>
+          <h2>Payment</h2>
+          <p>We accept: {site.payment}.</p>
+        </>
+      )}
+
+      {site.cancellation && (
+        <>
+          <h2>Rescheduling and cancellation</h2>
+          <p>{site.cancellation}</p>
+        </>
+      )}
+
+      <h2>Delivery</h2>
+      <p>
+        Edited photos are delivered in a private online gallery
+        {site.turnaround ? `. Typical turnaround: ${site.turnaround}.` : "."} Delivery times may change for large events.
+      </p>
+
+      <h2>Copyright and licensing</h2>
+      <ul>
+        <li>All photographs are &copy; {site.owner} and remain our property.</li>
+        <li>You receive a personal licence to print and share your photos. Commercial use needs written permission.</li>
+        <li>Please do not remove watermarks, resell or re-edit the photos without permission.</li>
+      </ul>
+
+      <h2>Use of your photos by us</h2>
+      <p>
+        We may show selected photos in our portfolio and on social media. If you would prefer that we do not,
+        please tell us before the session.
+      </p>
+
+      {site.originals && (
+        <>
+          <h2>Original files</h2>
+          <p>{site.originals}</p>
+        </>
+      )}
+
+      {site.liability && (
+        <>
+          <h2>Liability</h2>
+          <p>{site.liability}</p>
+        </>
+      )}
+
+      <h2>Contact</h2>
+      <p>
+        <a href={`mailto:${site.email}`}>{site.email}</a> &middot; {site.phone}
+      </p>
     </div>
-  )
+  );
 }

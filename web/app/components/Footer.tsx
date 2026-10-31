@@ -1,59 +1,48 @@
 import Link from "next/link";
 import Year from "./Year";
+import { CookieSettingsButton } from "./CookieBanner";
+import { site } from "@/app/lib/site";
+
+const socials = [
+  { key: "instagram", cls: "ig", icon: "fa-instagram", label: "Instagram" },
+  { key: "facebook", cls: "fb", icon: "fa-facebook-f", label: "Facebook" },
+  { key: "tiktok", cls: "tt", icon: "fa-tiktok", label: "TikTok" },
+  { key: "youtube", cls: "yt", icon: "fa-youtube", label: "YouTube" },
+] as const;
 
 export default function Footer() {
+  const tel = site.phone.replace(/[^+\d]/g, "");
+  const links = socials.filter((s) => site.social[s.key]);
+
   return (
     <footer className="site-footer">
-      <div className="footer-grid">
-        <div className="footer-brand">
-          <strong>Gerard Photo Studio</strong>
-          <p>Photography by Kim Gerard: weddings, portraits, fashion, commercial, travel and events.</p>
-          <p>Follow along for new work and behind-the-scenes.</p>
+      <div className="footer-inner">
+        <div className="footer-line">
+          <span>&copy; <Year /> {site.name}</span>
+          {site.location && (<><span>&bull;</span><span>{site.location}</span></>)}
+          {site.phone && (<><span>&bull;</span><a href={`tel:${tel}`}>{site.phone}</a></>)}
+          {site.email && (<><span>&bull;</span><a href={`mailto:${site.email}`}>{site.email}</a></>)}
         </div>
 
-        <div>
-          <h4>Quick links</h4>
-          <ul>
-            <li><Link href="/#top">Home</Link></li>
-            <li><Link href="/#gallery">My work</Link></li>
-            <li><Link href="/#gallery">Gallery</Link></li>
-            <li><Link href="/services">Services</Link></li>
-            <li><Link href="/#about">About</Link></li>
-            <li><Link href="/book">Book a session</Link></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4>Contact</h4>
-          <ul>
-            <li>Phone: <a href="tel:+257 69270296"><span className="todo">+257 69270296</span></a></li>
-            <li>WhatsApp: <a href="https://wa.me/25769270296"><span className="todo">Chat with us</span></a></li>
-            <li>Email: <a href="mailto:mfuranzimagerard028@gmail.com"><span className="todo">mfuranzimagerard028@gmail.com</span></a></li>
-            <li>Studio: <span className="todo">Gihanga, Burundi</span></li>
-            <li>click to <a href="https://www.google.com/maps/search/XXX+Commune+Gihanga,+Secteur,+Gihanga,+Burundi/@-3.1906,29.302,17z?hl=en&entry=ttu&g_ep=EgoyMDI2MTAxMy4wIKXMDSoASAFQAw%3D%3D">Get directions</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4>Studio hours</h4>
-          <ul>
-            <li><span className="todo">Mon to Fri: 9:00 to 18:00</span></li>
-            <li><span className="todo">Sat: 10:00 to 16:00</span></li>
-            <li><span className="todo">Sun: By appointment</span></li>
-          </ul>
-          <h4 style={{ marginTop: 18 }}>Follow</h4>
+        {links.length > 0 && (
           <div className="social">
-            <a href="https://www.instagram.com/mfuranzima12?xtok=OGFibTJpOW5jd2U2" className="ig" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=100090223424913" className="fb" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
-            <a href="#" className="tt" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i className="fa-brands fa-tiktok"></i></a>
-            <a href="#" className="yt" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i className="fa-brands fa-youtube"></i></a>
-          </div> 
-        </div>
-      </div>
+            {links.map((s) => (
+              <a key={s.key} href={site.social[s.key]} className={s.cls} target="_blank" rel="noopener noreferrer" aria-label={s.label}>
+                <i className={`fa-brands ${s.icon}`}></i>
+              </a>
+            ))}
+          </div>
+        )}
 
-      <div className="footer-bottom">
-        <span>&copy; <Year /> Gerard Photo Studio. All photographs &copy; Kim Gerard. Please do not copy or reuse without permission.</span>
-        <span><a href="#">Privacy policy</a> &middot; <a href="#">Terms &amp; licensing</a> &middot; <a href="#top">Back to top</a></span>
+        <div className="footer-line">
+          <span>All photographs &copy; {site.owner}</span>
+          <span>&bull;</span>
+          <Link href="/privacy">Privacy</Link>
+          <span>&bull;</span>
+          <Link href="/terms">Terms</Link>
+          <span>&bull;</span>
+          <CookieSettingsButton />
+        </div>
       </div>
     </footer>
   );

@@ -21,7 +21,7 @@ export default function Header() {
           <span className="brand-name">Gerard<br />Photo Studio</span>
         </Link>
 
-        <nav className={`nav-links${open ? " open" : ""}`} aria-label="Main">
+        <nav id="site-nav" className={`nav-links${open ? " open" : ""}`} aria-label="Main">
           <Link href="/" onClick={close}>Home</Link>
           <Link href="/#gallery" onClick={close}>Portfolio</Link>
           <Link href="/services" onClick={close}>Services</Link>
@@ -40,7 +40,7 @@ export default function Header() {
             </svg>
           </button>
           <Link className="btn-green" href="/book" onClick={close}>Book Now</Link>
-          <button type="button" className="menu-btn" aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)}>
+          <button type="button" className="menu-btn" aria-label="Menu" aria-expanded={open} aria-controls="site-nav" onClick={() => setOpen(!open)}>
             {open ? "✕" : "☰"}
           </button>
         </div>
