@@ -11,7 +11,7 @@ const supabase = createClient(
 const clean = (v: unknown, max = 2000) =>
   typeof v === "string" ? v.trim().slice(0, max) : "";
 
-const PHONE = /^\+?[0-9 ]{7,20}$/;
+const PHONE = /^\+?[0-9 ]{7,19}$/;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -53,25 +53,20 @@ export async function POST(req: Request) {
 
   const service = services.find((s) => s.id === serviceId);
 
-  if (!name || !service) {
-    return NextResponse.json({ error: "Please fill in your name and choose a service." }, { status: 400 });
-  }
-  if (!PHONE.test(phone)) {
-    return NextResponse.json({ error: "Please enter a valid phone number, for example +257 79 123 456." }, { status: 400 });
-  }
-  if (!EMAIL.test(email)) {
-    return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
-  }
+  // Each message says which field is wrong and how to fix it. "field" lets the form mark that exact box.
+  const bad = (message: string, field: string) =>
+    NextResponse.json({ error: message, field }, { status: 400 });
+
+  if (!name) return bad("Enter your full name, for example John Doe.", "name");
+  if (!service) return bad("Choose the service you want from the list.", "service");
+  if (!PHONE.test(phone)) return bad("Use digits and spaces only (7 to 19 digits), for example +257 79 123 456.", "phone");
+  if (!EMAIL.test(email)) return bad("Add a domain after the @, like name@gmail.com.", "email");
   if (date) {
     // Allow today in any time zone: reject only dates before yesterday (UTC)
     const earliest = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-    if (!DATE.test(date) || date < earliest) {
-      return NextResponse.json({ error: "Please choose a date that is not in the past." }, { status: 400 });
-    }
+    if (!DATE.test(date) || date < earliest) return bad("That date has passed. Pick today or a later date.", "date");
   }
-  if (!consent) {
-    return NextResponse.json({ error: "Please tick the box to accept the Terms and Privacy Policy." }, { status: 400 });
-  }
+  if (!consent) return bad("Tick the box to agree to the Terms and Privacy Policy.", "consent");
 
   const { error } = await supabase.from("bookings").insert([
     {

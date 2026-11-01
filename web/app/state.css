@@ -1,0 +1,70 @@
+/* ===== STATES: notices, loading, errors, offline, success (from the "10 UI states" checklist) ===== */
+
+/* Notices (info, warning) */
+.notice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 20px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--text); font-size: 14px; }
+.notice i { color: var(--green); }
+.notice-warn { background: #fff6e0; border-color: #f1d28a; color: #5c4300; }
+.notice-warn i { color: #b07a00; }
+:root[data-theme="dark"] .notice-warn { background: #2b2410; border-color: #6b5517; color: #f3dfa6; }
+:root[data-theme="dark"] .notice-warn i { color: #f0c24a; }
+.booking-form > .notice, .booking-form > .form-alert, .booking-form > .consent-error { grid-column: 1 / -1; }
+
+/* Empty and error boxes */
+.state-box { max-width: 640px; margin: 0 auto; padding: 40px 24px; text-align: center; background: var(--card); border: 1px dashed var(--line); border-radius: 16px; }
+.state-box > i { margin-bottom: 12px; font-size: 36px; color: var(--green); }
+.state-box h3 { margin: 0 0 8px; font-size: 20px; }
+.state-box p { margin: 0 auto 18px; max-width: 460px; color: var(--muted); }
+.state-box .state-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 0; }
+
+/* Real progress */
+.progress-note p { margin: 8px 0 20px; text-align: center; font-size: 14px; color: var(--muted); }
+.progress { height: 8px; overflow: hidden; border-radius: 99px; background: var(--tile); }
+.progress span { display: block; height: 100%; background: var(--green); transition: width .3s ease; }
+
+/* Each photo shows a shimmer until it has loaded */
+.gcell.is-loading { background: linear-gradient(90deg, var(--tile) 25%, var(--band) 50%, var(--tile) 75%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .gcell.is-loading { animation: none; } }
+
+/* Form: inline field messages */
+.field-error { display: flex; align-items: flex-start; gap: 6px; font-size: 13px; font-weight: 400; line-height: 1.4; color: #c0392b; }
+:root[data-theme="dark"] .field-error { color: #ff8a80; }
+.booking-form input.is-invalid, .booking-form select.is-invalid, .booking-form textarea.is-invalid { border-color: #c0392b; box-shadow: 0 0 0 1px #c0392b; }
+.booking-form input.is-valid, .booking-form select.is-valid { border-color: var(--green); }
+.ok { margin-left: 6px; font-style: normal; font-weight: 700; color: var(--green); }
+
+/* Form: error alert (input / network / server) */
+.form-alert { padding: 14px 16px; border-radius: 12px; border: 1px solid #e3a8a2; background: #fdecea; color: #7d1f1a; }
+.form-alert strong { display: block; margin-bottom: 4px; }
+.form-alert p { margin: 0; font-size: 14px; }
+.form-alert-network, .form-alert-server { border-color: #e6c27a; background: #fff6e0; color: #5c4300; }
+.form-alert .form-alert-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+:root[data-theme="dark"] .form-alert { background: #3a1613; border-color: #7a2c26; color: #ffb4ab; }
+:root[data-theme="dark"] .form-alert-network, :root[data-theme="dark"] .form-alert-server { background: #2b2410; border-color: #6b5517; color: #f3dfa6; }
+
+/* Success */
+.booking-success { text-align: left; }
+.success-badge { display: grid; place-items: center; width: 64px; height: 64px; margin: 0 auto 14px; border-radius: 50%; background: #d3ebdb; color: var(--green); font-size: 28px; }
+.booking-success h2, .booking-success .success-lead { text-align: center; }
+.success-summary { display: grid; gap: 8px; margin: 18px 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.success-summary div { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.success-summary dt { min-width: 150px; font-weight: 600; }
+.success-summary dd { margin: 0; color: var(--muted); overflow-wrap: anywhere; }
+.booking-success h3 { margin: 18px 0 8px; font-size: 18px; }
+.next-steps { margin: 0 0 20px; padding-left: 22px; color: var(--muted); }
+.next-steps li { margin-bottom: 6px; }
+.booking-success .booking-success-actions { margin-top: 8px; }
+
+/* Offline banner */
+.net-banner { position: fixed; left: 50%; bottom: 16px; z-index: 1500; display: flex; align-items: center; gap: 10px; max-width: min(92vw, 560px); padding: 12px 18px; transform: translateX(-50%); border-radius: 12px; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+.net-offline { background: #3b2f0b; color: #ffe9a8; }
+.net-online { background: #0f5132; color: #d1f2e0; }
+
+/* 404 */
+.did-you-mean { margin: 0 0 18px; font-size: 18px; }
+.did-you-mean a { font-weight: 700; color: var(--green); }
+.chip-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0 0 24px; }
+.chip-row .tab { text-decoration: none; }
+
+/* Buttons inside the form keep their outline (the form's base button style removes borders) */
+.booking-form .btn-outline-dark { border: 2px solid var(--text); padding: 10px 24px; text-decoration: none; }
+.booking-form .btn-outline-dark:hover { background: var(--text); color: var(--bg); }

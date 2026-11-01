@@ -89,7 +89,7 @@ export default function Home() {
       {/* ABOUT */}
       <section id="about" className="sec about" aria-labelledby="about-h">
         <div className="wrap">
-          <h2 id="about-h" className="sec-title">About {site.name}</h2>
+          <h2 id="about-h" className="sec-title">About {site.owner}</h2>
           <p className="sec-sub">Everything you may want to know before you book.</p>
 
           <div className="about-intro">
@@ -97,9 +97,9 @@ export default function Home() {
               <Image src={assets.gerardPhoto} alt={`${site.owner}, photographer`} fill sizes="(max-width: 720px) 100vw, 340px" />
             </div>
             <div className="about-intro-text">
-              <h3>Who we are</h3>
+              <h3>Who is GERARD </h3>
               <p>
-                {site.name} is a photography studio led by {site.owner}. We photograph weddings, portraits, families,
+                Gerald photography is led by {site.owner}; I photograph weddings, portraits, families,
                 fashion, products, events and travel, in the studio and on location.
               </p>
               {site.story && <p>{site.story}</p>}
@@ -108,7 +108,7 @@ export default function Home() {
 
           <div className="about-grid">
             <div>
-              <h3>Why clients choose us</h3>
+              <h3>Why clients choose {site.owner}</h3>
               <ul>
                 <li>Friendly direction and posing help, so you look natural, not stiff</li>
                 <li>Professional lighting and equipment for studio and on-location work</li>
@@ -119,7 +119,7 @@ export default function Home() {
 
               <h3>How it works</h3>
               <ol className="steps">
-                <li><strong>Enquire.</strong> Send a booking request or message us on WhatsApp.</li>
+                <li><strong>Enquire.</strong> Send a booking request or message  on WhatsApp.</li>
                 <li><strong>Plan.</strong> We agree on the date, location, outfits and the shots you want{site.deposit ? ", and confirm with a deposit" : ""}.</li>
                 <li><strong>Shoot.</strong> Relax and enjoy the session while we guide you.</li>
                 <li><strong>Deliver.</strong> You choose your favourites, we edit them and deliver your photos in a private online gallery.{site.turnaround ? ` Typical turnaround: ${site.turnaround}.` : ""}</li>
@@ -155,7 +155,7 @@ export default function Home() {
       <section id="book" className="sec sec-band book-section" aria-labelledby="book-h">
         <div className="wrap">
           <h2 id="book-h" className="sec-title">Book Your Session</h2>
-          <p className="sec-sub">Tell us what you need and pick a date. We will confirm quickly.</p>
+          <p className="sec-sub">Tell me what you need and pick a date. I will confirm quickly.</p>
 
           <div className="contact-strip">
             {site.phone && <a href={`tel:${tel}`}><i className="fa-solid fa-phone"></i>{site.phone}</a>}
