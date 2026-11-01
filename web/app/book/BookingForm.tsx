@@ -57,6 +57,18 @@ function readForm(form: HTMLFormElement) {
   return { values, consent };
 }
 
+// Which of our fields an event came from (null if it was something else, like the form itself)
+function fieldOf(target: unknown): FieldName | null {
+  if (
+    target instanceof HTMLInputElement ||
+    target instanceof HTMLSelectElement ||
+    target instanceof HTMLTextAreaElement
+  ) {
+    return FIELDS.find((f) => f === target.name) ?? null;
+  }
+  return null;
+}
+
 export default function BookingForm({ services }: { services: Service[] }) {
   const params = useSearchParams();
   const preselected = params.get("service") ?? "";
@@ -134,8 +146,8 @@ export default function BookingForm({ services }: { services: Service[] }) {
 
   // VALIDATION: flag the exact field, inline, when the visitor leaves it
   function onBlur(e: React.FocusEvent<HTMLFormElement>) {
-    const name = (e.target as HTMLInputElement).name as FieldName;
-    if (!FIELDS.includes(name)) return;
+    const name = fieldOf(e.target);
+    if (!name) return;
     setTouched((t) => ({ ...t, [name]: true }));
     validateField(name);
   }
@@ -143,8 +155,8 @@ export default function BookingForm({ services }: { services: Service[] }) {
   // ...and clear the message the moment they fix it
   function onInput(e: React.FormEvent<HTMLFormElement>) {
     saveDraft();
-    const name = (e.target as HTMLInputElement).name as FieldName;
-    if (FIELDS.includes(name) && touched[name]) validateField(name);
+    const name = fieldOf(e.target);
+    if (name && touched[name]) validateField(name);
   }
 
   function openLegal(which: Legal) {
