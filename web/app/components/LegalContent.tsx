@@ -20,6 +20,7 @@ export function PrivacyContent() {
         <li>The service you want, your preferred date and the location</li>
         <li>Any details you write in the message box</li>
         <li>The time you agreed to this policy and our Terms</li>
+        <li>If you create an account: your name, your email address and a password (stored securely, in a form we cannot read)</li>
       </ul>
 
       <h2>Why we use it</h2>
@@ -29,6 +30,13 @@ export function PrivacyContent() {
         <li>To keep a record of our agreement with you</li>
       </ul>
       <p>We do not sell your information, and we do not use it for unrelated marketing without asking you first.</p>
+
+      <h2>Your account</h2>
+      <p>
+        An account is optional: you can always book as a guest. If you create one, it lets you follow your own booking
+        requests. Only you can see the requests linked to your account. You can log out at any time, and you can ask us
+        to delete your account and its details.
+      </p>
 
       <h2>Where it is stored</h2>
       <p>
@@ -52,6 +60,7 @@ export function PrivacyContent() {
       <ul>
         <li><strong>Theme</strong>: remembers whether you chose light or dark mode.</li>
         <li><strong>Cookie choice</strong>: remembers whether you accepted or declined optional cookies.</li>
+        <li><strong>Login session</strong>: if you log in, keeps you logged in on this device until you log out.</li>
         <li>
           <strong>Booking form draft</strong>: keeps what you have typed in the booking form, so you do not lose it
           if you leave the page by mistake. It stays on your device only, and is deleted when you send the form or

@@ -3,10 +3,11 @@ import { NextResponse } from "next/server";
 import { services } from "@/app/lib/services";
 import { site } from "@/app/lib/site";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const noSession = { persistSession: false, autoRefreshToken: false };
+
+const supabase = createClient(url, anon, { auth: noSession });
 
 const clean = (v: unknown, max = 2000) =>
   typeof v === "string" ? v.trim().slice(0, max) : "";
@@ -68,7 +69,19 @@ export async function POST(req: Request) {
   }
   if (!consent) return bad("Tick the box to agree to the Terms and Privacy Policy.", "consent");
 
-  const { error } = await supabase.from("bookings").insert([
+  // Is the visitor logged in? Then this request is linked to their account.
+  // A missing or expired login is not an error: the request is saved as a guest booking.
+  const token = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "").trim();
+  let userId: string | null = null;
+  if (token) {
+    const { data: found } = await supabase.auth.getUser(token);
+    userId = found.user?.id ?? null;
+  }
+  const db = userId
+    ? createClient(url, anon, { auth: noSession, global: { headers: { Authorization: `Bearer ${token}` } } })
+    : supabase;
+
+  const { error } = await db.from("bookings").insert([
     {
       client_name: name,
       phone,
@@ -80,6 +93,7 @@ export async function POST(req: Request) {
       status: "pending",
       accepted_terms: true,
       accepted_at: new Date().toISOString(),
+      user_id: userId,
     },
   ]);
 
@@ -128,5 +142,5 @@ export async function POST(req: Request) {
     });
   }
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true, linked: userId !== null });
 }

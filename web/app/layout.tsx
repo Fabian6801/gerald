@@ -1,11 +1,13 @@
 import "./globals.css";
 import "./state.css";
+import "./auth.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/Footer";
 import CookieBanner from "@/app/components/CookieBanner";
 import OfflineBanner from "@/app/components/OfflineBanner";
+import { AuthProvider } from "@/app/components/AuthProvider";
 import { assets } from "@/app/lib/assets";
 import { site, waLink } from "@/app/lib/site";
 
@@ -60,12 +62,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body id="top">
-        <a className="skip-link" href="#main">Skip to content</a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-        <CookieBanner />
-        <OfflineBanner />
+        <AuthProvider>
+          <a className="skip-link" href="#main">Skip to content</a>
+          <Header />
+          <main id="main">{children}</main>
+          <Footer />
+          <CookieBanner />
+          <OfflineBanner />
+        </AuthProvider>
 
         <a
           className="whatsapp-float"
