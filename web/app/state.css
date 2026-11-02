@@ -68,3 +68,11 @@
 /* Buttons inside the form keep their outline (the form's base button style removes borders) */
 .booking-form .btn-outline-dark { border: 2px solid var(--text); padding: 10px 24px; text-decoration: none; }
 .booking-form .btn-outline-dark:hover { background: var(--text); color: var(--bg); }
+
+/* ===== DARK THEME POLISH (dark is the default theme) ===== */
+:root[data-theme="dark"] .svc-icon,
+:root[data-theme="dark"] .svc-icon-sm,
+:root[data-theme="dark"] .success-badge { background: rgba(22, 181, 115, .18); }
+:root[data-theme="dark"] .req { color: #ff8a80; }
+:root[data-theme="dark"] .tab[aria-pressed="true"] { background: var(--green-btn); border-color: var(--green-btn); }
+:root[data-theme="dark"] .contact-card, :root[data-theme="dark"] .svc-card { border-color: #2f3640; }

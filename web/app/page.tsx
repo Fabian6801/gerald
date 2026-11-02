@@ -116,14 +116,6 @@ export default function Home() {
                 <li>Clear quotes, with no surprise charges</li>
                 <li>Photos delivered in a private online gallery you can share</li>
               </ul>
-
-              <h3>How it works</h3>
-              <ol className="steps">
-                <li><strong>Enquire.</strong> Send a booking request or message  on WhatsApp.</li>
-                <li><strong>Plan.</strong> We agree on the date, location, outfits and the shots you want{site.deposit ? ", and confirm with a deposit" : ""}.</li>
-                <li><strong>Shoot.</strong> Relax and enjoy the session while we guide you.</li>
-                <li><strong>Deliver.</strong> You choose your favourites, we edit them and deliver your photos in a private online gallery.{site.turnaround ? ` Typical turnaround: ${site.turnaround}.` : ""}</li>
-              </ol>
             </div>
 
             <div>

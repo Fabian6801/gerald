@@ -1,7 +1,7 @@
 import "./globals.css";
 import "./state.css";
 import "./auth.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/Footer";
@@ -49,11 +49,13 @@ const jsonLd = {
   sameAs: Object.values(site.social).filter(Boolean),
 };
 
-const themeScript = `try{var t=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}`;
+const themeScript = `try{var t=localStorage.getItem("theme");document.documentElement.dataset.theme=(t==="light"||t==="dark")?t:"dark"}catch(e){}`;
+
+export const viewport: Viewport = { colorScheme: "dark light", themeColor: "#07223f" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={poppins.variable}>
+   <html lang="en" suppressHydrationWarning data-theme="dark" data-scroll-behavior="smooth" className={poppins.variable}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <link
