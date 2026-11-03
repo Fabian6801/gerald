@@ -1,4 +1,5 @@
 import { TermsContent } from "@/app/components/LegalContent";
+import PageCloseButton from "@/app/components/PageCloseButton";
 
 export const metadata = {
   title: "Terms & Licensing",
@@ -8,6 +9,7 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <div className="wrap inner legal">
+      <PageCloseButton />
       <h1 className="page-title">Terms &amp; Licensing</h1>
       <TermsContent />
     </div>

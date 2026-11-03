@@ -7,11 +7,15 @@ import { useAuth } from "@/app/components/AuthProvider";
 import { useOnline } from "@/app/lib/useOnline";
 import AuthField from "@/app/components/AuthField";
 import AuthAlert from "@/app/components/AuthAlert";
+import LegalPopup from "@/app/components/LegalPopup";
+import type { LegalKind } from "@/app/components/LegalPopup";
 import { authIssue, checkConfirm, checkEmail, checkName, checkPassword, safeNext, strength } from "@/app/lib/authHelpers";
 import type { AuthIssue } from "@/app/lib/authHelpers";
 
 type FieldName = "name" | "email" | "password" | "confirm" | "terms";
 type Errors = Partial<Record<FieldName, string>>;
+
+const DRAFT_KEY = "signup-draft"; // only the name and email are kept, never the password
 
 export default function SignupForm() {
   const router = useRouter();
@@ -31,6 +35,30 @@ export default function SignupForm() {
   const [busy, setBusy] = useState(false);
   const [sentTo, setSentTo] = useState("");
   const [resent, setResent] = useState(false);
+  const [legal, setLegal] = useState<LegalKind | null>(null);
+  const [restored, setRestored] = useState(false);
+
+  // If the visitor left this page and came back, put their name and email back
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      const draft = JSON.parse(raw) as { name?: string; email?: string };
+      if (draft.name) setName(draft.name);
+      if (draft.email) setEmail(draft.email);
+      if (draft.name || draft.email) setRestored(true);
+    } catch {}
+  }, []);
+
+  function remember(nextName: string, nextEmail: string) {
+    try { sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ name: nextName, email: nextEmail })); } catch {}
+  }
+
+  function startOver() {
+    try { sessionStorage.removeItem(DRAFT_KEY); } catch {}
+    setName(""); setEmail(""); setPassword(""); setConfirm(""); setTerms(false);
+    setErrors({}); setTouched({}); setIssue(null); setRestored(false);
+  }
 
   useEffect(() => {
     if (!loading && user && !sentTo) router.replace(next);
@@ -100,6 +128,7 @@ export default function SignupForm() {
         setBusy(false);
         return;
       }
+      try { sessionStorage.removeItem(DRAFT_KEY); } catch {}
       if (data.session) {
         router.replace(next); // email confirmation is switched off: they are already logged in
         return;
@@ -157,16 +186,24 @@ export default function SignupForm() {
       <h1>Create your account</h1>
       <p className="lead">Follow your booking requests and book faster next time. It takes a minute.</p>
 
+      {restored && (
+        <div className="notice" role="status">
+          <i className="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+          <span>We kept your name and email from earlier.</span>
+          <button type="button" className="link-inline" onClick={startOver}>Start over</button>
+        </div>
+      )}
+
       <form className="auth-form" onSubmit={onSubmit} noValidate>
         <AuthField
           id="signup-name" label="Full name" value={name} autoComplete="name" placeholder="e.g. John Doe" autoFocus
-          onChange={(v) => { setName(v); live("name", { ...values, name: v }); }}
+          onChange={(v) => { setName(v); remember(v, email); live("name", { ...values, name: v }); }}
           onBlur={() => touch("name")}
           error={errors.name} valid={ok("name")}
         />
         <AuthField
           id="signup-email" label="Email" type="email" value={email} autoComplete="email" placeholder="you@example.com"
-          onChange={(v) => { setEmail(v); live("email", { ...values, email: v }); }}
+          onChange={(v) => { setEmail(v); remember(name, v); live("email", { ...values, email: v }); }}
           onBlur={() => touch("email")}
           error={errors.email} valid={ok("email")}
         />
@@ -204,7 +241,8 @@ export default function SignupForm() {
               onChange={(e) => { setTerms(e.target.checked); live("terms", { ...values, terms: e.target.checked }); setTouched((t) => ({ ...t, terms: true })); setErrors((x) => ({ ...x, terms: e.target.checked ? undefined : rules.terms({ ...values, terms: false }) })); }}
             />
             <span>
-              I agree to the <Link href="/terms" target="_blank">Terms</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link>.
+              I agree to the <button type="button" className="link-inline" onClick={() => setLegal("terms")}>Terms</button> and{" "}
+              <button type="button" className="link-inline" onClick={() => setLegal("privacy")}>Privacy Policy</button>.
             </span>
           </label>
           {errors.terms && (
@@ -230,6 +268,8 @@ export default function SignupForm() {
       <p className="auth-switch">
         Already have an account? <Link href={`/login?next=${encodeURIComponent(next)}`}>Log in</Link>
       </p>
+
+      <LegalPopup which={legal} onClose={() => setLegal(null)} />
     </div>
   );
 }

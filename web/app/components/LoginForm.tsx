@@ -12,6 +12,8 @@ import type { AuthIssue } from "@/app/lib/authHelpers";
 
 type Errors = { email?: string; password?: string };
 
+const DRAFT_KEY = "login-draft"; // only the email is kept, never the password
+
 export default function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
@@ -26,6 +28,14 @@ export default function LoginForm() {
   const [issue, setIssue] = useState<AuthIssue | null>(null);
   const [busy, setBusy] = useState(false);
   const [resent, setResent] = useState(false);
+
+  // If the visitor left this page and came back, put their email back
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(DRAFT_KEY);
+      if (saved) setEmail(saved);
+    } catch {}
+  }, []);
 
   // Already logged in: go straight to where they were heading
   useEffect(() => {
@@ -57,6 +67,7 @@ export default function LoginForm() {
         setBusy(false);
         return;
       }
+      try { sessionStorage.removeItem(DRAFT_KEY); } catch {}
       router.replace(next); // the page changes, so the button stays busy until then
     } catch (err) {
       setIssue(authIssue(err));
@@ -98,7 +109,7 @@ export default function LoginForm() {
           label="Email"
           type="email"
           value={email}
-          onChange={(v) => { setEmail(v); if (touched.email) setErrors((x) => ({ ...x, email: checkEmail(v) })); }}
+          onChange={(v) => { setEmail(v); try { sessionStorage.setItem(DRAFT_KEY, v); } catch {} if (touched.email) setErrors((x) => ({ ...x, email: checkEmail(v) })); }}
           onBlur={() => { setTouched((t) => ({ ...t, email: true })); setErrors((x) => ({ ...x, email: checkEmail(email) })); }}
           error={errors.email}
           valid={touched.email && !errors.email && email.length > 0}
