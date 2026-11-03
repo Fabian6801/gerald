@@ -4,7 +4,6 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { site, waLink } from "@/app/lib/site";
 import { useOnline } from "@/app/lib/useOnline";
-import { useAuth } from "@/app/components/AuthProvider";
 import { PrivacyContent, TermsContent } from "@/app/components/LegalContent";
 
 type Service = { id: string; title: string };
@@ -13,7 +12,7 @@ type Legal = "terms" | "privacy";
 type FieldName = "name" | "phone" | "email" | "service" | "date" | "consent";
 type Errors = Partial<Record<FieldName, string>>;
 type FormAlert = { kind: "input" | "network" | "server"; title: string; message: string };
-type Summary = { name: string; service: string; date: string; phone: string; email: string; linked: boolean };
+type Summary = { name: string; service: string; date: string; phone: string; email: string };
 
 const DRAFT_KEY = "booking-draft";
 const FIELDS: FieldName[] = ["name", "phone", "email", "service", "date", "consent"];
@@ -74,7 +73,6 @@ export default function BookingForm({ services }: { services: Service[] }) {
   const params = useSearchParams();
   const preselected = params.get("service") ?? "";
   const online = useOnline();
-  const { user, session, loading: authLoading } = useAuth();
   const formRef = useRef<HTMLFormElement>(null);
   const legalRef = useRef<HTMLDialogElement>(null);
   const [status, setStatus] = useState<Status>("idle");
@@ -112,19 +110,6 @@ export default function BookingForm({ services }: { services: Service[] }) {
       if (any) setRestored(true);
     } catch {}
   }, [preselected]);
-
-  // Logged in: fill in the name and email (never over something they already typed)
-  useEffect(() => {
-    const form = formRef.current;
-    if (!form || !user) return;
-    const fullName = typeof user.user_metadata?.full_name === "string" ? (user.user_metadata.full_name as string) : "";
-    const fill = (field: string, value: string) => {
-      const el = form.elements.namedItem(field);
-      if (el instanceof HTMLInputElement && !el.value && value) el.value = value;
-    };
-    fill("name", fullName);
-    fill("email", user.email ?? "");
-  }, [user]);
 
   function saveDraft() {
     const form = formRef.current;
@@ -211,13 +196,10 @@ export default function BookingForm({ services }: { services: Service[] }) {
     try {
       const res = await fetch("/api/book", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(session ? { Authorization: `Bearer ${session.access_token}` } : {}),
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      let json: { error?: string; field?: string; linked?: boolean } = {};
+      let json: { error?: string; field?: string } = {};
       try { json = await res.json(); } catch {}
 
       if (res.ok) {
@@ -228,7 +210,6 @@ export default function BookingForm({ services }: { services: Service[] }) {
           date: values.date || "",
           phone: values.phone || "",
           email: values.email || "",
-          linked: json.linked === true,
         });
         try { sessionStorage.removeItem(DRAFT_KEY); } catch {}
         form.reset();
@@ -295,12 +276,6 @@ export default function BookingForm({ services }: { services: Service[] }) {
           <li>We meet on the day and create your photos.</li>
         </ol>
 
-        {summary.linked && (
-          <p className="success-account">
-            <i className="fa-solid fa-circle-check" aria-hidden="true"></i> You can follow this request in <Link href="/account">your account</Link>.
-          </p>
-        )}
-
         <p className="booking-success-actions">
           <Link className="btn-green" href="/">Back to home</Link>
           <a className="btn-outline-dark" href={waLink()} target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
@@ -334,21 +309,6 @@ export default function BookingForm({ services }: { services: Service[] }) {
             <button type="button" className="link-inline" onClick={startOver}>Start over</button>
           </div>
         )}
-
-        {!authLoading && (user ? (
-          <div className="notice" role="status">
-            <i className="fa-solid fa-circle-user" aria-hidden="true"></i>
-            <span>Booking as <strong>{user.email}</strong>. This request will appear in your account.</span>
-          </div>
-        ) : (
-          <div className="notice" role="status">
-            <i className="fa-regular fa-circle-user" aria-hidden="true"></i>
-            <span>
-              Have an account? <Link href="/login?next=/book" className="link-inline">Log in</Link> or{" "}
-              <Link href="/signup?next=/book" className="link-inline">sign up</Link> to follow this request, or simply continue as a guest.
-            </span>
-          </div>
-        ))}
 
         <label>
           <span>Full name <b className="req" aria-hidden="true">*</b>{ok("name") && <i className="ok" aria-hidden="true">&#10003;</i>}</span>

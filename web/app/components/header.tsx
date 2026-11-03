@@ -2,15 +2,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import Logo from "./logo";
-import { useAuth } from "./AuthProvider";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const { user, loading } = useAuth();
   const close = () => setOpen(false);
-
-  const fullName = typeof user?.user_metadata?.full_name === "string" ? (user.user_metadata.full_name as string) : "";
-  const label = fullName.split(" ")[0] || user?.email?.split("@")[0] || "Account";
 
   function toggleTheme() {
     const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
@@ -23,7 +18,7 @@ export default function Header() {
       <div className="header-inner">
         <Link href="/" className="brand" onClick={close}>
           <Logo />
-          <span className="brand-name">Gerard<br />Photo Studio</span>
+          <span className="brand-name">Gerard</span>
         </Link>
 
         <nav id="site-nav" className={`nav-links${open ? " open" : ""}`} aria-label="Main">
@@ -32,36 +27,9 @@ export default function Header() {
           <Link href="/services" onClick={close}>Services</Link>
           <Link href="/#about" onClick={close}>About</Link>
           <Link href="/#book" onClick={close}>Contact</Link>
-
-          {/* Account links inside the phone menu */}
-          {!loading && (user ? (
-            <>
-              <Link className="nav-auth-mobile" href="/account" onClick={close}>My account ({label})</Link>
-              <Link className="nav-auth-mobile" href="/logout" onClick={close}>Log out</Link>
-            </>
-          ) : (
-            <>
-              <Link className="nav-auth-mobile" href="/login" onClick={close}>Log in</Link>
-              <Link className="nav-auth-mobile" href="/signup" onClick={close}>Sign up</Link>
-            </>
-          ))}
         </nav>
 
         <div className="nav-actions">
-          {/* Account links on a computer */}
-          <div className="nav-auth">
-            {!loading && (user ? (
-              <>
-                <Link href="/account" className="nav-user"><i className="fa-regular fa-circle-user" aria-hidden="true"></i> {label}</Link>
-                <Link href="/logout">Log out</Link>
-              </>
-            ) : (
-              <>
-                <Link href="/login">Log in</Link>
-                <Link href="/signup" className="nav-signup">Sign up</Link>
-              </>
-            ))}
-          </div>
 
           <button id="theme-toggle" className="icon-btn" type="button" aria-label="Toggle dark and light mode" onClick={toggleTheme}>
             <svg className="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">

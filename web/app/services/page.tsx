@@ -1,11 +1,22 @@
+"use client";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { services } from "@/app/lib/services";
+// Round X at the top right of the Terms and Privacy pages: goes back to where the visitor came from
+export  function PageCloseButton() {
+  const router = useRouter();
+  function close() {
+    if (window.history.length > 1) router.back();
+    else router.push("/");
+  }
 
-export const metadata = {
-  title: "Services",
-  description: "Wedding, portrait, family, fashion, commercial, corporate, event, travel, editing and print services from Gerard Photo Studio.",
-};
+  return (
+    <button type="button" className="legal-close page-close" aria-label="Close and go back" onClick={close}>
+      &times;
+    </button>
+  );
+}
 
 export default function ServicesPage() {
   return (
