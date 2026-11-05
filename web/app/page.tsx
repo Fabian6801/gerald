@@ -99,8 +99,8 @@ export default function Home() {
             <div className="about-intro-text">
               <h3>Who is GERARD </h3>
               <p>
-                Gerald photography is led by {site.owner}; I photograph weddings, portraits, families,
-                fashion, products, events and travel, in the studio and on location.
+              I Don't Just Take Photos.<br/>
+              I Capture Legacies
               </p>
               {site.story && <p>{site.story}</p>}
             </div>
@@ -110,16 +110,15 @@ export default function Home() {
             <div>
               <h3>Why clients choose {site.owner}</h3>
               <ul>
-                <li>Friendly direction and posing help, so you look natural, not stiff</li>
-                <li>Professional lighting and equipment for studio and on-location work</li>
-                <li>Careful editing in a consistent, timeless style</li>
-                <li>Clear quotes, with no surprise charges</li>
-                <li>Photos delivered in a private online gallery you can share</li>
+                <li>Friendly direction and posing help.</li>
+                <li>Professional lighting</li>
+                <li>Careful editing in atimeless style</li>
+                <li>Photos delivered in time </li>
               </ul>
             </div>
 
             <div>
-              <h3>Studio details</h3>
+              <h3>Contact details</h3>
               <dl className="facts">
                 {facts.map(([label, value]) => (
                   <div className="fact" key={label}>
