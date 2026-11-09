@@ -1,6 +1,6 @@
-import Link from "next/link";
 import Year from "./Year";
 import { CookieSettingsButton } from "./CookieBanner";
+import FooterLegalLinks from "./FooterLegalLinks";
 import { site } from "@/app/lib/site";
 
 const socials = [
@@ -37,9 +37,7 @@ export default function Footer() {
         <div className="footer-line">
           <span>All photographs &copy; {site.owner}</span>
           <span>&bull;</span>
-          <Link href="/privacy">Privacy</Link>
-          <span>&bull;</span>
-          <Link href="/terms">Terms</Link>
+          <FooterLegalLinks />
           <span>&bull;</span>
           <CookieSettingsButton />
         </div>

@@ -1,5 +1,5 @@
 import { PrivacyContent } from "@/app/components/LegalContent";
-import PageCloseButton from "@/app/components/PageCloseButton";
+import LegalSheet from "@/app/components/LegalSheet";
 
 export const metadata = {
   title: "Privacy Policy",
@@ -8,10 +8,8 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="wrap inner legal">
-      <PageCloseButton />
-      <h1 className="page-title">Privacy Policy</h1>
+    <LegalSheet title="Privacy Policy">
       <PrivacyContent />
-    </div>
+    </LegalSheet>
   );
 }

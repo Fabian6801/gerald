@@ -40,7 +40,6 @@ export default function Header() {
               <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
             </svg>
           </button>
-          <Link className="btn-green" href="/book" onClick={close}>Book Now</Link>
           <button type="button" className="menu-btn" aria-label="Menu" aria-expanded={open} aria-controls="site-nav" onClick={() => setOpen(!open)}>
             {open ? "✕" : "☰"}
           </button>

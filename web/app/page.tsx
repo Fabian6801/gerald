@@ -103,20 +103,21 @@ export default function Home() {
               I Capture Legacies
               </p>
               {site.story && <p>{site.story}</p>}
+              <div>
+                <h3>Why clients choose me </h3>
+                <p>I always give :</p>
+                <ul>
+                  <li>Friendly direction and posing help.</li>
+                  <li>Professional lighting</li>
+                  <li>Careful editing in atimeless style</li>
+                  <li>Photo delivery on time </li>
+                </ul>
+              </div>
             </div>
           </div>
 
           <div className="about-grid">
-            <div>
-              <h3>Why clients choose {site.owner}</h3>
-              <ul>
-                <li>Friendly direction and posing help.</li>
-                <li>Professional lighting</li>
-                <li>Careful editing in atimeless style</li>
-                <li>Photos delivered in time </li>
-              </ul>
-            </div>
-
+            
             <div>
               <h3>Contact details</h3>
               <dl className="facts">
@@ -128,7 +129,7 @@ export default function Home() {
                 ))}
               </dl>
 
-              <h3>Common questions</h3>
+              <h3>Frequently Asked Questions</h3>
               <div className="faq">
                 {faqs.map((f) => (
                   <details key={f.q}>

@@ -1,0 +1,132 @@
+/* =====================================================================================
+   STYLE BOOST: rounder shapes, bigger buttons, zoom on hover, nicer forms, pop-up legal pages.
+   It does NOT touch any background or colour of the page. Load it AFTER the other css files.
+   ===================================================================================== */
+
+:root {
+  --r-sm: 16px;   /* inputs */
+  --r-md: 20px;   /* tiles, notices */
+  --r-lg: 28px;   /* cards, bars, pop-ups */
+  --r-pill: 999px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --zoom: 1.04;   /* how much a card grows on hover (1.04 = 4%) */
+  --zoom-btn: 1.06;
+}
+:root section[id] { scroll-margin-top: 110px; }
+
+/* ---------- BUTTONS: pill shape, comfortable size ---------- */
+:root .btn-green, :root .btn-ghost, :root .btn-outline-dark, :root .btn-outline {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 46px; padding: 11px 26px; border-radius: var(--r-pill);
+  font-weight: 600; line-height: 1.2;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease), background-color .2s, color .2s, filter .2s;
+}
+:root .btn-lg { min-height: 54px; padding: 14px 34px; font-size: 17px; border-radius: var(--r-pill); }
+:root .nav-actions .btn-green { min-height: 42px; padding: 9px 22px; }
+:root .icon-btn, :root .menu-btn { transition: transform .3s var(--ease), filter .2s; }
+
+/* a small round arrow at the end of the main buttons */
+:root .hero-actions .btn-lg, :root .svc-more .btn-outline-dark, :root .svc-detail .btn-green { padding-right: 14px; }
+:root .hero-actions .btn-lg::after, :root .svc-more .btn-outline-dark::after, :root .svc-detail .btn-green::after {
+  content: "\2192"; display: inline-grid; place-items: center; width: 28px; height: 28px; flex: none;
+  border-radius: 50%; background: #fff; color: #07223f; font-size: 15px; line-height: 1;
+  transition: transform .3s var(--ease);
+}
+:root .svc-more .btn-outline-dark::after { background: var(--text); color: var(--bg); }
+
+/* ---------- BARS: header and footer ---------- */
+:root .site-header {
+  top: 12px; margin: 12px auto; width: min(1160px, calc(100% - 24px));
+  border-radius: var(--r-pill); border: 1px solid rgba(255, 255, 255, .08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+}
+:root .header-inner { max-width: none; height: 68px; padding: 0 14px 0 20px; }
+:root .hero { margin: 0 12px; border-radius: var(--r-lg); }
+:root .site-footer { margin: 28px 12px 12px; border-radius: var(--r-lg); }
+@media (max-width: 860px) {
+  :root .site-header { top: 8px; margin: 8px auto; width: calc(100% - 16px); border-radius: var(--r-lg); }
+  :root .header-inner { height: 64px; padding: 0 12px 0 16px; }
+  :root .nav-links { top: calc(100% + 8px); border-radius: var(--r-lg); border: 1px solid rgba(255, 255, 255, .1); }
+  :root .hero { margin: 0 8px; }
+  :root .site-footer { margin: 24px 8px 8px; }
+}
+
+/* ---------- ROUND CORNERS EVERYWHERE ELSE ---------- */
+:root .svc-card, :root .svc-detail, :root .quote-card, :root .contact-card, :root .booking-item,
+:root .facts, :root .state-box, :root .booking-success { border-radius: var(--r-lg); }
+:root .gcell, :root .lb-stage { border-radius: var(--r-md); }
+:root .about-photo-wrap { border-radius: var(--r-lg); }
+:root .notice, :root .form-alert, :root .success-summary { border-radius: var(--r-md); }
+:root .net-banner, :root .progress, :root .tab, :root .status { border-radius: var(--r-pill); }
+:root .tab { padding: 9px 20px; }
+:root .cookie-modal, :root dialog.legal-dialog, :root dialog.lightbox { border-radius: var(--r-lg); }
+:root dialog.legal-dialog { background: var(--card); border: 1px solid var(--line); }
+:root .cookie-actions button { border-radius: var(--r-pill); padding: 10px 22px; }
+:root .logo-box { border-radius: 16px; }
+
+/* ---------- FORMS: bigger, rounder, clearer ---------- */
+:root .booking-form input:not([type="checkbox"]), :root .booking-form select, :root .booking-form textarea {
+  min-height: 50px; padding: 13px 18px; border-radius: var(--r-sm); font-size: 16px;
+  transition: border-color .2s, box-shadow .2s;
+}
+:root .booking-form textarea { min-height: 120px; border-radius: var(--r-md); }
+:root .booking-form input:focus, :root .booking-form select:focus, :root .booking-form textarea:focus {
+  outline: none; border-color: var(--green); box-shadow: 0 0 0 4px rgba(22, 181, 115, .25);
+}
+:root .booking-form input.is-invalid:focus, :root .booking-form select.is-invalid:focus { box-shadow: 0 0 0 4px rgba(192, 57, 43, .25); }
+:root .booking-form input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--green); }
+:root .booking-form button[type="submit"] { min-width: 240px; }
+/* the form sits in a rounded card, so it stands out from the section behind it */
+:root .book-section .booking-form, :root .book-layout .booking-form {
+  padding: 28px; border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: var(--card); box-shadow: var(--shadow);
+}
+@media (max-width: 560px) {
+  :root .book-section .booking-form, :root .book-layout .booking-form { padding: 20px; }
+  :root .booking-form button[type="submit"] { width: 100%; }
+}
+
+/* ---------- ZOOM ON HOVER (only on devices that really hover, not on touch screens) ---------- */
+:root .svc-card, :root .svc-detail, :root .quote-card, :root .gcell, :root .tab, :root .social a {
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s;
+}
+:root .gcell img { transition: transform .6s var(--ease); }
+
+@media (hover: hover) {
+  :root .btn-green:hover, :root .btn-ghost:hover, :root .btn-outline-dark:hover, :root .btn-outline:hover { transform: scale(var(--zoom-btn)); }
+  :root .btn-green:hover { box-shadow: 0 10px 24px rgba(10, 131, 80, .35); }
+  :root .btn-green:active, :root .btn-ghost:active, :root .btn-outline-dark:active, :root .btn-outline:active { transform: scale(.97); }
+  :root .btn-lg:hover::after, :root .svc-more .btn-outline-dark:hover::after, :root .svc-detail .btn-green:hover::after { transform: translateX(3px); }
+  :root .icon-btn:hover, :root .menu-btn:hover { transform: scale(1.12); }
+
+  :root .svc-card:hover, :root .svc-detail:hover, :root .quote-card:hover {
+    transform: scale(var(--zoom)); z-index: 2; border-color: var(--green); box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
+  }
+  :root .gcell:hover { transform: scale(1.03); z-index: 2; box-shadow: 0 16px 36px rgba(0, 0, 0, .4); }
+  :root .gcell:hover img { transform: scale(1.08); }
+  :root .gcell.skeleton:hover, :root .gcell.is-loading:hover { transform: none; box-shadow: none; }
+  :root .gcell.is-loading:hover img { transform: none; }
+  :root .tab:hover { transform: scale(1.06); }
+  :root .social a:hover { transform: scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root .btn-green:hover, :root .btn-ghost:hover, :root .btn-outline-dark:hover, :root .btn-outline:hover,
+  :root .svc-card:hover, :root .svc-detail:hover, :root .quote-card:hover, :root .gcell:hover, :root .gcell:hover img,
+  :root .tab:hover, :root .social a:hover, :root .icon-btn:hover, :root .menu-btn:hover { transform: none; }
+}
+
+/* ---------- PRIVACY / TERMS PAGES AS A POP-UP ---------- */
+.legal-overlay {
+  position: fixed; inset: 0; z-index: 1200; display: grid; place-items: center; padding: 16px;
+  background: rgba(0, 0, 0, .65); backdrop-filter: blur(4px);
+}
+.legal-sheet {
+  display: flex; flex-direction: column; width: min(100%, 760px); max-height: min(90vh, 860px);
+  background: var(--card); color: var(--text); border: 1px solid var(--line);
+  border-radius: var(--r-lg); box-shadow: 0 30px 80px rgba(0, 0, 0, .5); overflow: hidden;
+}
+.legal-sheet-head, .legal-dialog-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 24px; border-bottom: 1px solid var(--line); }
+.legal-sheet-head h1 { margin: 0; font-size: 22px; }
+.legal-sheet-body { padding: 8px 24px 16px; overflow-y: auto; }
+.legal-sheet-foot, .legal-dialog-foot { padding: 14px 24px; border-top: 1px solid var(--line); text-align: right; }
+.legal-dialog-body { padding: 8px 24px 16px; }
