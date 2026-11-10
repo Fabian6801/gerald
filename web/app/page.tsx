@@ -7,7 +7,6 @@ import { site, waLink } from "@/app/lib/site";
 import Gallery from "@/app/components/gallery";
 import Testimonials from "@/app/components/testimonials";
 import BookingForm from "@/app/book/BookingForm";
-import Reveal from "@/app/components/Reveal";
 
 // The three cards shown on the home page (prices come from app/lib/services.ts)
 const featured = [
@@ -58,7 +57,7 @@ export default function Home() {
       <Gallery />
 
       {/* SERVICES */}
-      <Reveal>
+      
         <section id="services" className="sec sec-band" aria-labelledby="services-h">
           <div className="wrap">
             <h2 id="services-h" className="sec-title">Services</h2>
@@ -84,7 +83,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      </Reveal>
+    
 
       {/* TESTIMONIALS (only shown when you add some in app/lib/testimonials.ts) */}
       <Testimonials />

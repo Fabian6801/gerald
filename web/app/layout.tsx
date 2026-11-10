@@ -1,15 +1,14 @@
 import "./globals.css";
 import "./state.css";
-import "./style-boosts.css";
+import "./style-boost.css";
 import "./animations.css";
-import "./scroll-reveal.css";
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/Footer";
 import CookieBanner from "@/app/components/CookieBanner";
 import OfflineBanner from "@/app/components/OfflineBanner";
-import scrollReveal from "@/app/components/ScrollReveal";
+import ScrollReveal from "@/app/components/ScrollReveal";
 import { assets } from "@/app/lib/assets";
 import { site, waLink } from "@/app/lib/site";
 
@@ -73,7 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <CookieBanner />
         <OfflineBanner />
-        <scrollReveal />
+        <ScrollReveal />
         
         <a
           className="whatsapp-float"
