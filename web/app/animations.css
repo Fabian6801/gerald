@@ -1,0 +1,46 @@
+/* =====================================================================================
+   SELF-STARTING ANIMATIONS: they play by themselves, no hover or click needed.
+   Everything is inside "no-preference", so visitors who turned animations off in their
+   device settings see a calm page with no movement at all.
+   Load this file AFTER style-boost.css.
+   ===================================================================================== */
+
+:root {
+  --reveal-duration: .85s;   /* how long a section takes to appear */
+  --reveal-distance: 28px;   /* how far it rises while appearing */
+  --reveal-blur: 6px;        /* how blurry it starts (0px = no blur) */
+}
+
+@keyframes slide-down { from { opacity: 0; transform: translateY(-28px); } to { opacity: 1; transform: none; } }
+@keyframes hero-settle { from { transform: scale(1.12); } to { transform: scale(1); } }
+@keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes reveal-up {
+  from { opacity: 0; transform: var(--reveal-from, translate3d(0, var(--reveal-distance), 0)); filter: blur(var(--reveal-blur)); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes ping { 0% { transform: scale(1); opacity: .55; } 80%, 100% { transform: scale(1.75); opacity: 0; } }
+@keyframes glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(22, 181, 115, 0); } 50% { box-shadow: 0 0 0 10px rgba(22, 181, 115, .2); } }
+@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* 1. When the page opens */
+  .site-header { animation: slide-down .7s var(--ease, ease) both; }
+  .hero-img { animation: hero-settle 2s var(--ease, ease) both; }
+  .hero-content h1 { animation: rise .9s var(--ease, ease) .15s both; }
+  .hero-tag { animation: rise .9s var(--ease, ease) .3s both; }
+  .hero-actions { animation: rise .9s var(--ease, ease) .45s both; }
+
+  /* 2. While scrolling: ScrollReveal.tsx adds "reveal" (hidden), then "in-view" (plays) when the element reaches the screen */
+  :root .reveal { opacity: 0; transform: var(--reveal-from, translate3d(0, var(--reveal-distance), 0)); filter: blur(var(--reveal-blur)); }
+  :root .reveal.in-view { animation: reveal-up var(--reveal-duration) var(--ease, ease) var(--reveal-delay, 0ms) both; }
+  :root .gcell { --reveal-from: translate3d(0, 22px, 0) scale(.94); }
+
+  /* 3. Gentle motion that keeps going */
+  .whatsapp-float::after {
+    content: ""; position: absolute; inset: 0; border: 2px solid #25d366; border-radius: 50%;
+    pointer-events: none; animation: ping 2.6s ease-out infinite;
+  }
+  .hero-actions .btn-green { animation: glow 3s ease-in-out 1.6s infinite; }
+  .hero-actions .btn-lg::after { animation: nudge 2.2s ease-in-out 1.2s infinite; }
+}
