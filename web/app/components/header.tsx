@@ -22,11 +22,11 @@ export default function Header() {
         </Link>
 
         <nav id="site-nav" className={`nav-links${open ? " open" : ""}`} aria-label="Main">
-          <Link href="/" onClick={close}>Home</Link>
-          <Link href="/#gallery" onClick={close}>Portfolio</Link>
-          <Link href="/services" onClick={close}>Services</Link>
-          <Link href="/#about" onClick={close}>About</Link>
-          <Link href="/#book" onClick={close}>Contact</Link>
+          <Link href="/" onClick={close} className="btn-nav">Home</Link>
+          <Link href="/#gallery" onClick={close}className="btn-nav">Portfolio</Link>
+          <Link href="/services" onClick={close} className="btn-nav">Services</Link>
+          <Link href="/#about" onClick={close}className="btn-nav">About</Link>
+          <Link href="/#book" onClick={close} className="btn-nav">Contact</Link>
         </nav>
 
         <div className="nav-actions">

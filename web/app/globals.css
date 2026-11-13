@@ -20,6 +20,7 @@ section[id] { scroll-margin-top: 90px; }
 .todo { background: rgba(255,199,44,.35); padding: 0 4px; border-radius: 4px; }
 
 /* ===== BUTTONS ===== */
+.btn-nav { font: inherit; font-weight: 600; font-size: 14px; padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text); cursor: pointer; }
 .btn-green { display: inline-block; background: var(--green-btn); color: #fff; font: inherit; font-weight: 600; text-decoration: none; padding: 10px 20px; border: 0; border-radius: 8px; white-space: nowrap; cursor: pointer; }
 .btn-green:hover, .icon-btn:hover { filter: brightness(1.08); }
 .btn-lg { font-size: 17px; padding: 13px 30px; border-radius: 10px; }

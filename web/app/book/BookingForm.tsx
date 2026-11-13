@@ -257,8 +257,8 @@ export default function BookingForm({ services }: { services: Service[] }) {
         <div className="success-badge" aria-hidden="true"><i className="fa-solid fa-check"></i></div>
         <h2>Thank you{summary.name ? `, ${summary.name}` : ""}! Your request is in.</h2>
         <p className="success-lead">
-          We have received your booking request{summary.service ? ` for ${summary.service}` : ""}. Nothing is booked yet:
-          we will contact you to confirm availability{site.responseTime ? ` ${site.responseTime}` : ""}. Your details are stored securely and used only to
+          I have received your booking request{summary.service ? ` for ${summary.service}` : ""}. Nothing is booked yet:
+          I will contact you to confirm availability{site.responseTime ? ` ${site.responseTime}` : ""}. Your details are stored securely and used only to
           handle this booking.
         </p>
 
@@ -270,10 +270,10 @@ export default function BookingForm({ services }: { services: Service[] }) {
 
         <h3>What happens next</h3>
         <ol className="next-steps">
-          <li>We review your request and check our calendar.</li>
-          <li>We contact you to confirm the date and the details.</li>
-          <li>{site.deposit ? `You confirm your date with the deposit: ${site.deposit}.` : "We agree the price and details with you in writing."}</li>
-          <li>We meet on the day and create your photos.</li>
+          <li>I review your request and check our calendar.</li>
+          <li>I contact you to confirm the date and the details.</li>
+          <li>{site.deposit ? `You confirm your date with the deposit: ${site.deposit}.` : "I agree the price and details with you in writing."}</li>
+          <li>I meet on the day and create your photos.</li>
         </ol>
 
         <p className="booking-success-actions">
@@ -311,7 +311,7 @@ export default function BookingForm({ services }: { services: Service[] }) {
         )}
 
         <label>
-          <span>Full name <b className="req" aria-hidden="true">*</b>{ok("name") && <i className="ok" aria-hidden="true">&#10003;</i>}</span>
+          <span>Full name <b className="req" aria-hidden="true">*</b>{ok("name") && <i className="ok" aria-hidden="true">&#10003;</i>}    </span>
           <input type="text" name="name" required maxLength={100} autoComplete="name" placeholder="e.g. John Doe" className={cls("name")} {...aria("name")} />
           {msg("name")}
         </label>

@@ -22,7 +22,7 @@ export default function ServicesPage() {
   return (
     <div className="wrap inner">
       <h1 className="page-title">Services</h1>
-      <p className="lead">Everything we offer. Pick one to book directly.</p>
+      <p className="lead">Everything I offer. Pick one to book directly.</p>
 
       <div className="svc-detail-grid">
         {services.map((s) => (

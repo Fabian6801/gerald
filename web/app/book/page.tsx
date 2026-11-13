@@ -38,7 +38,7 @@ export default function BookPage() {
               <li><i className="fa-solid fa-clock"></i><span>{site.hours}</span></li>
             )}
           </ul>
-          {site.responseTime && <p className="contact-note">We typically respond {site.responseTime}.</p>}
+          {site.responseTime && <p className="contact-note">I typically respond {site.responseTime}.</p>}
         </aside>
       </div>
     </div>

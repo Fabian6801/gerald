@@ -264,7 +264,7 @@ export default function Gallery() {
               <i className="fa-regular fa-images" aria-hidden="true"></i>
               <h3>New photos are on their way</h3>
               <p>
-                We are adding our latest work to the gallery. Tell us about your day and we will share examples that
+                I am adding our latest work to the gallery. Tell ME about your day and I will share examples that
                 match it.
               </p>
               <p className="state-actions">
