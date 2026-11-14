@@ -269,3 +269,56 @@ dialog.legal-dialog::backdrop { background: rgba(0,0,0,.65); }
 .legal-close:hover { filter: brightness(.95); }
 .legal-dialog-body { padding: 4px 20px 12px; overflow-y: auto; }
 .legal-dialog-foot { padding: 14px 20px; border-top: 1px solid var(--line); text-align: right; }
+
+/* Wrap your card like this in HTML: <div class="card-wrap"><div class="card">... */
+.card-wrap {
+  padding-top: 28px; /* this space is for the badge, so it won't be cut */
+  overflow: visible;
+} 
+.card {
+  position: relative;
+  border-radius: 28px;
+  overflow: visible; /* CHANGE THIS - was hidden, that's what cut your badge */
+  padding: 70px 20px 30px 20px; 
+  background-size: cover;
+}
+.badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content; /* don't let it stretch full width */
+  max-width: 80%;
+  background: #fff;
+  color: #111 !important; /* force black text */
+  padding: 12px 22px 14px;
+  border-radius: 0 0 20px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap; /* keep on one line */
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge::before,
+.badge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.badge::before {
+  left: -20px;
+  border-top-right-radius: 20px;
+  box-shadow: 8px -4px 0 6px #fff;
+}
+
+.badge::after {
+  right: -20px;
+  border-top-left-radius: 20px;
+  box-shadow: -8px -4px 0 6px #fff;
+}
