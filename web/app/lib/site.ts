@@ -2,7 +2,7 @@
 // Fill in a value to show it on the website. Leave it as "" and it stays hidden,
 // so visitors never see an empty or "to do" placeholder.
 export const site = {
-  name: "Gerard Photo Studio",
+  name: "Gerard Photogrraphy",
   owner: "Kim Gerard",
   tagline: "Wedding, portrait & events photography — elegant, timeless, natural",
   description:
@@ -26,10 +26,11 @@ export const site = {
 
   // Full web addresses of your social pages. "" hides that icon.
   social: {
-    instagram: "",
-    facebook: "",
+    instagram: "https://www.instagram.com/mfuranzima12?xtok=OGFibTJpOW5jd2U2",
+    facebook: "https://www.facebook.com/profile.php?id=100090223424913",
     tiktok: "",
     youtube: "",
+    linkedin: "https://linkedin.com/in/mfuranzima-gérard-554ab32a9",
   },
 
   // About section, FAQ and Terms. "" hides the line.

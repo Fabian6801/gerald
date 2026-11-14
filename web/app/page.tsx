@@ -7,6 +7,7 @@ import { site, waLink } from "@/app/lib/site";
 import Gallery from "@/app/components/gallery";
 import Testimonials from "@/app/components/testimonials";
 import BookingForm from "@/app/book/BookingForm";
+import LocationMap from "@/app/components/LocationMap";
 
 // The three cards shown on the home page (prices come from app/lib/services.ts)
 const featured = [
@@ -119,7 +120,7 @@ export default function Home() {
           </div>
 
           <div className="about-grid">
-            
+            <LocationMap />
             <div>
               <h3>Contact details</h3>
               <dl className="facts">

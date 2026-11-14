@@ -21,8 +21,8 @@ export  function PageCloseButton() {
 export default function Services() {
   return (
     <div>
-      <div className="card">
-        <h2 className="page-title">Services</h2>
+      <div className="wrap inner">
+        <h2 className="page-title" style={{textAlign: 'center' }}>Services</h2>
         <p className="lead">Everything I offer. Pick one to book directly.</p>
 
         <div className="svc-detail-grid">

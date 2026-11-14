@@ -270,55 +270,95 @@ dialog.legal-dialog::backdrop { background: rgba(0,0,0,.65); }
 .legal-dialog-body { padding: 4px 20px 12px; overflow-y: auto; }
 .legal-dialog-foot { padding: 14px 20px; border-top: 1px solid var(--line); text-align: right; }
 
-/* Wrap your card like this in HTML: <div class="card-wrap"><div class="card">... */
-.card-wrap {
-  padding-top: 28px; /* this space is for the badge, so it won't be cut */
-  overflow: visible;
-} 
-.card {
-  position: relative;
-  border-radius: 28px;
-  overflow: visible; /* CHANGE THIS - was hidden, that's what cut your badge */
-  padding: 70px 20px 30px 20px; 
-  background-size: cover;
-}
-.badge {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content; /* don't let it stretch full width */
-  max-width: 80%;
-  background: #fff;
-  color: #111 !important; /* force black text */
-  padding: 12px 22px 14px;
-  border-radius: 0 0 20px 20px;
+/* Main Footer - matches your screenshot */
+.footer {
+  background: #0e2a47; /* your dark blue */
+  color: #dbe6f2;
+  padding: 28px 20px 30px;
+  text-align: center;
   font-size: 15px;
-  font-weight: 700;
-  white-space: nowrap; /* keep on one line */
-  z-index: 10;
+  line-height: 1.6;
+  border-radius: 0 0 14px 14px;
+}
+
+.footer p {
+  margin: 6px 0;
+  color: #dbe6f2;
+}
+
+.footer a {
+  color: #dbe6f2;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* --- SOCIAL ICONS ROW --- */
+.footer-socials {
+  display: flex;
+  justify-content: center; /* center them */
+  align-items: center;
+  gap: 18px; /* space between icons */
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 50%; /* round circle */
+  color: #fff;
+  font-size: 20px;
+  transition: all 0.2s ease;
 }
 
-.badge::before,
-.badge::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 20px;
-  height: 20px;
+.social-icon:hover {
+  background: #ffffff;
+  color: #0e2a47;
+  transform: translateY(-3px);
+  text-decoration: none;
 }
 
-.badge::before {
-  left: -20px;
-  border-top-right-radius: 20px;
-  box-shadow: 8px -4px 0 6px #fff;
+/* Specific brand colors on hover */
+.social-icon.youtube:hover { background: #FF0000; color: #fff; }
+.social-icon.instagram:hover { background: #E1306C; color: #fff; }
+.social-icon.facebook:hover { background: #1877F2; color: #fff; }
+.social-icon.tiktok:hover { background: #000; color: #fff; }
+
+/* --- FLOATING WHATSAPP - like in your screenshot top-right --- */
+.whatsapp-float {
+  position: fixed;
+  right: 18px;
+  bottom: 80px;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+  z-index: 100;
 }
 
-.badge::after {
-  right: -20px;
-  border-top-left-radius: 20px;
-  box-shadow: -8px -4px 0 6px #fff;
+/* On phone, make icons smaller */
+@media (max-width: 600px) {
+  .footer {
+    font-size: 13px;
+    padding: 22px 12px;
+  }
+  .social-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
 }

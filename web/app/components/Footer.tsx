@@ -8,6 +8,7 @@ const socials = [
   { key: "facebook", cls: "fb", icon: "fa-facebook-f", label: "Facebook" },
   { key: "tiktok", cls: "tt", icon: "fa-tiktok", label: "TikTok" },
   { key: "youtube", cls: "yt", icon: "fa-youtube", label: "YouTube" },
+  { key: "linkedin", cls: "li", icon: "fa-linkedin-in", label: "LinkedIn" },
 ] as const;
 
 export default function Footer() {
