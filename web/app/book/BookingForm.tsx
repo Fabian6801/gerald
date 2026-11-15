@@ -70,6 +70,8 @@ function fieldOf(target: unknown): FieldName | null {
 }
 
 export default function BookingForm({ services }: { services: Service[] }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   const params = useSearchParams();
   const preselected = params.get("service") ?? "";
   const online = useOnline();
@@ -297,6 +299,14 @@ export default function BookingForm({ services }: { services: Service[] }) {
         <i className="fa-solid fa-circle-exclamation" aria-hidden="true"></i> {errors[f]}
       </small>
     ) : null;
+
+    if (!mounted) {
+      return (
+        <form aria-label="Booking form">
+          <p>Loading booking form...</p>
+        </form>
+      );
+    }
 
   return (
     <>

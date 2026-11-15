@@ -3,7 +3,7 @@ import "./state.css";
 import "./style-boost.css";
 import "./animations.css";
 import type { Metadata, Viewport } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Playfair_Display } from "next/font/google";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/Footer";
 import CookieBanner from "@/app/components/CookieBanner";
@@ -15,8 +15,14 @@ import { site, waLink } from "@/app/lib/site";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
+  variable: "--font-body",
   display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-heading",
 });
 
 const fullTitle = `${site.owner} | ${site.name}`;
@@ -56,7 +62,7 @@ export const viewport: Viewport = { colorScheme: "dark light", themeColor: "#072
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-   <html lang="en" suppressHydrationWarning data-theme="dark" data-scroll-behavior="smooth" className={poppins.variable}>
+   <html lang="en" suppressHydrationWarning data-theme="dark" data-scroll-behavior="smooth" className={`${poppins.variable} ${playfair.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <link

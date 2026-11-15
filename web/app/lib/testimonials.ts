@@ -3,5 +3,5 @@
 export type Testimonial = { quote: string; name: string; detail?: string };
 
 export const testimonials: Testimonial[] = [
-  // { quote: "Kim made us feel relaxed and the photos are beautiful.", name: "Aline & Eric", detail: "Wedding" },
+  //{ quote: "Kim made us feel relaxed and the photos are beautiful.", name: "Aline & Eric", detail: "Wedding" },
 ];

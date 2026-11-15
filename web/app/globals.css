@@ -1,6 +1,16 @@
 @import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import "tailwindcss/utilities.css" layer(utilities); 
+/*=====FONTS: Poppins, system-ui, sans-serif=====*/
+body {
+  font-family: var(--font-body), system-ui, sans-serif;
+}
 
+h1, h2, h3, .sec-title, .title, .hero-title {
+  font-family: var(--font-heading), Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+} 
+ 
 /* ===== COLOURS: light = white page + black text | dark = black page + white text ===== */
 :root, :root[data-theme="light"] { color-scheme: light; --bg:#ffffff; --band:#f5f6f8; --text:#111111; --muted:#4d5662; --card:#ffffff; --line:#e3e8ee; --tile:#e4e8ec; --shadow:0 6px 20px rgba(15,27,45,.10); }
 :root[data-theme="dark"] { color-scheme: dark; --bg:#000000; --band:#0b0d11; --text:#ffffff; --muted:#b4bbc4; --card:#12151a; --line:#262b33; --tile:#1d2128; --shadow:0 6px 20px rgba(0,0,0,.6); }

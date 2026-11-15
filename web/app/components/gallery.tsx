@@ -48,6 +48,7 @@ function interleave(list: Item[], groups: string[]): Item[] {
 
 // The last list of photos that loaded successfully, kept on the visitor's device
 function readCache(): Item[] {
+  if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(CACHE_KEY);
     const parsed = raw ? (JSON.parse(raw) as Item[]) : [];
@@ -83,6 +84,8 @@ function Photo({ item, sizes, onDone }: { item: Item; sizes: string; onDone: (ur
 }
 
 export default function Gallery() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   const online = useOnline();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -201,6 +204,15 @@ export default function Gallery() {
   useEffect(() => {
     if (idx !== null) thumbRefs.current[idx]?.scrollIntoView({ block: "nearest", inline: "center" });
   }, [idx]);
+  
+  if (!mounted) {
+    return (
+      <section id="gallery" className="gallery" aria-label="Gallery">
+        <h2 className="title">Gallery</h2>
+        <p>Loading photos...</p>
+      </section>
+    );
+  }
 
   return (
     <>
@@ -282,7 +294,7 @@ export default function Gallery() {
               <p>Loading photos &middot; {doneCount} of {shown}</p>
             </div>
           )}
-          {total > 0 && slow && !lite && (
+          {/*c:\Users\Admin\AppData\Local\Packages\Microsoft.ScreenSketch_8wekyb3d8bbwe\TempState\Recordings\20261114-1946-03.6455734.mp4total > 0 && slow && !lite && (
             <div className="notice" role="status">
               <i className="fa-solid fa-gauge" aria-hidden="true"></i>
               <span>Slow connection? Lite mode loads fewer photos so the page opens faster.</span>
@@ -295,7 +307,7 @@ export default function Gallery() {
               <span>Lite mode is on.</span>
               <button type="button" className="link-inline" onClick={() => setLite(false)}>Show the full gallery</button>
             </div>
-          )}
+          )*/}
 
           {total > 0 && (
             <div className="gallery-grid">
