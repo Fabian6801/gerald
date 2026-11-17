@@ -1,7 +1,6 @@
 export default function LocationMap() {
   return (
     <section style={{ padding: '40px 20px', textAlign: 'center' }}>
-      <h2>Find me</h2>
       <p>Gihanga, Burundi</p>
 
       <iframe

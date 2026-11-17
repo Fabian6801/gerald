@@ -6,14 +6,17 @@ import { assets } from "@/app/lib/assets";
 import { site, waLink } from "@/app/lib/site";
 import Gallery from "@/app/components/gallery";
 import Testimonials from "@/app/components/testimonials";
-import BookingForm from "@/app/book/BookingForm";
 import LocationMap from "@/app/components/LocationMap";
-
+import BookingForm from "@/app/book/BookingForm";
+import About from "@/app/about/page";
 // The three cards shown on the home page (prices come from app/lib/services.ts)
 const featured = [
   { id: "wedding-photography", label: "Wedding" },
   { id: "portrait-sessions", label: "Portrait" },
   { id: "event-coverage", label: "Events" },
+  { id: "editing-retouching", label: "Editing & Retouching" },
+  { id: "fashion-editorial", label: "Fashion and Editorial" },
+  {id:"family-maternity", label:"Family and Maternity"},
 ];
 
 export default function Home() {
@@ -59,10 +62,10 @@ export default function Home() {
 
       {/* SERVICES */}
       
-        <section id="services" className="sec sec-band" aria-labelledby="services-h">
-          <div className="wrap">
-            <h2 id="services-h" className="sec-title">Services</h2>
-            <p className="sec-sub">Tailored sessions for every moment</p>
+      <section id="services" className="sec sec-band" aria-labelledby="services-h">
+        <div className="wrap">
+          <h2 id="services-h" className="sec-title">Services</h2>
+          <p className="sec-sub">Tailored sessions for every moment</p>
 
           <div className="svc-grid">
             {featured.map((f) => {
@@ -78,21 +81,22 @@ export default function Home() {
               );
             })}
           </div>
-
-          <div className="svc-more">
-            <Link className="btn-outline-dark" href="/services">View all services</Link>
-          </div>
+           <div className="svc-more"> 
+             <Link className="btn-outline-dark" href="/services">View all services</Link>
+           </div> 
         </div>
       </section>
+      
     
 
       {/* TESTIMONIALS (only shown when you add some in app/lib/testimonials.ts) */}
       <Testimonials />
 
       {/* ABOUT */}
+      {/* <About /> */}
       <section id="about" className="sec about" aria-labelledby="about-h">
         <div className="wrap">
-          <h2 id="about-h" className="sec-title">About {site.owner}</h2>
+          {/*<h2 id="about-h" className="sec-title">About {site.owner}</h2>
           <p className="sec-sub">Everything you may want to know before you book.</p>
 
           <div className="about-intro">
@@ -117,29 +121,32 @@ export default function Home() {
                 </ul>
               </div>
             </div>
-          </div>
+          </div>*/}
+          <div>
+            <h2 style={{ textAlign: 'center' }}>Locate me </h2>
+            <div className="about-grid">
+              <LocationMap />
+              <div>
+                <h3>Contact details</h3>
+                <dl className="facts">
+                  {facts.map(([label, value]) => (
+                    <div className="fact" key={label}>
+                      <dt>{label}</dt>
+                      <dd>{value}</dd>
+                    </div>
+                  ))}
+                </dl>
 
-          <div className="about-grid">
-            <LocationMap />
-            <div>
-              <h3>Contact details</h3>
-              <dl className="facts">
-                {facts.map(([label, value]) => (
-                  <div className="fact" key={label}>
-                    <dt>{label}</dt>
-                    <dd>{value}</dd>
-                  </div>
-                ))}
-              </dl>
-
-              <h3>Frequently Asked Questions</h3>
-              <div className="faq">
-                {faqs.map((f) => (
-                  <details key={f.q}>
-                    <summary>{f.q}</summary>
-                    <p>{f.a}</p>
-                  </details>
-                ))}
+                <h3>Frequently Asked Questions</h3>
+                <div className="faq">
+                  {faqs.map((f) => (
+                    <details key={f.q}>
+                      <summary>{f.q}</summary>
+                      <p>{f.a}</p>
+                    </details>
+                  ))}
+                </div>
+                
               </div>
             </div>
           </div>

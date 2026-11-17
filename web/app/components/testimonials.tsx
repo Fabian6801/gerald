@@ -7,7 +7,7 @@ export default function Testimonials() {
     <section id="testimonials" className="sec" aria-labelledby="testimonials-h">
       <div className="wrap">
         <h2 id="testimonials-h" className="sec-title">Kind Words</h2>
-        <p className="sec-sub">What our clients say</p>
+        <p className="sec-sub">What my clients say</p>
         <div className="quote-grid">
           {testimonials.map((t, i) => (
             <figure className="quote-card" key={i}>

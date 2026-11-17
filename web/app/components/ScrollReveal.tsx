@@ -17,13 +17,12 @@ const GROUPS = ".gallery-grid, .svc-grid, .svc-detail-grid, .quote-grid, .about-
 export default function ScrollReveal() {
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; // no animation for these visitors
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const seen = new WeakSet<Element>();
     let firstScan = true;
     let frame = 0;
 
-    // Plays the animation, then removes the helper classes so hover effects work again
     function play(el: HTMLElement) {
       el.classList.add("in-view");
       let timer = 0;
@@ -59,33 +58,35 @@ export default function ScrollReveal() {
 
         const rect = el.getBoundingClientRect();
         const onScreen = rect.bottom > 0 && rect.top < window.innerHeight * 0.92;
-        if (firstScan && onScreen) return; // already visible when the page opened: leave it as it is
+        if (firstScan && onScreen) return;
 
         let delay = 0;
         const parent = el.parentElement;
         if (parent && parent.matches(GROUPS)) {
-          delay = (Array.from(parent.children).indexOf(el) % 4) * 80; // a row of up to 4 appears left to right
+          delay = (Array.from(parent.children).indexOf(el) % 4) * 80;
         } else if (el.matches(".sec-sub")) {
           delay = 90;
         }
         el.style.setProperty("--reveal-delay", `${delay}ms`);
         el.classList.add("reveal");
 
-        if (onScreen) play(el); // appeared on screen later, for example the gallery photos after they load
+        if (onScreen) play(el);
         else io.observe(el);
       });
       firstScan = false;
     }
 
-    // New content (a page change, the gallery loading, a different gallery tab) gets the same treatment
+    // --- PASTE THE CODE SNIPPET HERE ---
+    const initTimer = window.setTimeout(() => {
+      scan();
+    }, 50);
+
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(scan);
     };
     const mutations = new MutationObserver(schedule);
     mutations.observe(document.body, { childList: true, subtree: true });
-    scan();
 
-    // Safety net: never leave something hidden on screen
     const safety = window.setTimeout(() => {
       document.querySelectorAll<HTMLElement>(".reveal:not(.in-view)").forEach((el) => {
         const r = el.getBoundingClientRect();
@@ -96,10 +97,11 @@ export default function ScrollReveal() {
     return () => {
       io.disconnect();
       mutations.disconnect();
+      window.clearTimeout(initTimer);
       window.clearTimeout(safety);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [],);
 
   return null;
 }

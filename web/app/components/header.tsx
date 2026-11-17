@@ -14,23 +14,23 @@ export default function Header() {
   }
 
   return (
-    <header className="site-header">
+    <h5 className="site-header">
       <div className="header-inner">
         <Link href="/" className="brand" onClick={close}>
           <Logo />
-          <span className="brand-name">Gerard</span>
+          <span className="brand-name">Kim Gerard<br /><span style={{ fontFamily: "'Lucida Calligraphy', cursive", fontSize: "0.875rem" }}>photography</span>
+          </span>
         </Link>
 
         <nav id="site-nav" className={`nav-links${open ? " open" : ""}`} aria-label="Main">
-          <Link href="/" onClick={close} className="btn-nav">Home</Link>
-          <Link href="/#gallery" onClick={close}className="btn-nav">Portfolio</Link>
-          <Link href="/services" onClick={close} className="btn-nav">Services</Link>
-          <Link href="/#about" onClick={close}className="btn-nav">About</Link>
-          <Link href="/#book" onClick={close} className="btn-nav">Contact</Link>
+         <button className="nav-tab"><Link href="/" onClick={close}>Home</Link></button>
+         <button className="nav-tab"><Link href="/#gallery" onClick={close}>Portfolio</Link></button>
+          <button className="nav-tab"><Link href="/services" onClick={close}>Services</Link></button>
+          <button className="nav-tab"><Link href="/about" onClick={close}>About</Link></button>
+          <button className="nav-tab"><Link href="/#book" onClick={close}>Contact</Link></button>
         </nav>
 
         <div className="nav-actions">
-
           <button id="theme-toggle" className="icon-btn" type="button" aria-label="Toggle dark and light mode" onClick={toggleTheme}>
             <svg className="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
               <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
@@ -45,6 +45,6 @@ export default function Header() {
           </button>
         </div>
       </div>
-    </header>
+    </h5>
   );
-}
+}       
