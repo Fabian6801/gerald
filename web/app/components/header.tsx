@@ -22,13 +22,13 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav id="site-nav" className={`nav-links${open ? " open" : ""}`} aria-label="Main">
-         <button className="nav-tab"><Link href="/" onClick={close}>Home</Link></button>
-         <button className="nav-tab"><Link href="/#gallery" onClick={close}>Portfolio</Link></button>
-          <button className="nav-tab"><Link href="/services" onClick={close}>Services</Link></button>
-          <button className="nav-tab"><Link href="/about" onClick={close}>About</Link></button>
-          <button className="nav-tab"><Link href="/#book" onClick={close}>Contact</Link></button>
-        </nav>
+        <div id="site-nav" className={`nav-links${open ? " open" : ""}`} aria-label="Main">
+          <Link href="/" className="btn-outline-dark" onClick={close}>Home</Link>
+          <Link href="/#gallery" className="btn-outline-dark" onClick={close}>Portfolio</Link>
+          <Link href="/services" className="btn-outline-dark" onClick={close}>Services</Link>
+          <Link href="/about" className="btn-outline-dark" onClick={close}>About</Link>
+          <Link href="/#book" className="btn-outline-dark" onClick={close}>Contact</Link>
+        </div>
 
         <div className="nav-actions">
           <button id="theme-toggle" className="icon-btn" type="button" aria-label="Toggle dark and light mode" onClick={toggleTheme}>

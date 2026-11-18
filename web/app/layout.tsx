@@ -58,7 +58,7 @@ const jsonLd = {
 
 const themeScript = `try{var t=localStorage.getItem("theme");document.documentElement.dataset.theme=(t==="light"||t==="dark")?t:"dark"}catch(e){}`;
 
-export const viewport: Viewport = { colorScheme: "dark light", themeColor: "#07223f" };
+export const viewport: Viewport = { colorScheme: "dark light", themeColor: "#07223f", width: "device-width", initialScale: 1.0 }; 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
