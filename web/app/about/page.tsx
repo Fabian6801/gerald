@@ -34,7 +34,7 @@ export default function About() {
                Behind Every Photo, There&apos;s a Story
               </h3>
               
-              <p style={{ marginTop: "1rem", color: "#D1D5DB", lineHeight: "2.5", fontSize: "0.900rem" }}>
+              <p className="about-intro-text">
                   I am a passionate photographer based in Burundi with over 8 years of
                   experience capturing authentic moments and stories through my lens.<br/>I believe every
                   photograph holds a unique narrative; whether it&apos;s a quiet portrait, a joyful
@@ -45,13 +45,13 @@ export default function About() {
               {/* Stats */}
               <div className="flex gap-10 mt-6">
                 <div>
-                   <p className="text-[#FFC93C] font-black text-xl">15+ <span className="text-white text-sm font-normal">Weddings</span></p>
+                   <p className="text-[#FFC93C] font-black text-xl">15+ <span className="about-intro-text">Weddings</span></p>
                 </div>
                 <div>
-                  <p className="text-[#FFC93C] font-black text-xl">50+ <span className="text-white text-sm font-normal">Portraits</span></p>
+                  <p className="text-[#FFC93C] font-black text-xl">50+ <span className="about-intro-text">Portraits</span></p>
                 </div>
                 <div>
-                  <p className="text-[#FFC93C] font-black text-xl">30+ <span className="text-white text-sm font-normal">Events</span></p>
+                  <p className="text-[#FFC93C] font-black text-xl">30+ <span className="about-intro-text">Events</span></p>
                 </div>
               </div>
             </div>
@@ -90,21 +90,21 @@ export default function About() {
             <span className="w-7 h-7 shrink-0 bg-[#FFC93C] text-[#0B1226] rounded-full flex items-center justify-center font-bold">✓</span>
             <div>
               <h4 className="font-bold">Professional Experience</h4>
-              <p className="text-sm text-gray-300">Years of expertise crafting high-quality photography that tells your story.</p>
+              <p className="about-intro-text">Years of expertise crafting high-quality photography that tells your story.</p>
             </div>
           </div>
           <div className="flex gap-3">
             <span className="w-7 h-7 shrink-0 bg-[#FFC93C] text-[#0B1226] rounded-full flex items-center justify-center font-bold">✓</span>
             <div>
               <h4 className="font-bold">Personalized Approach</h4>
-              <p className="text-sm text-gray-300">Tailored sessions to match your vision, style, and preferences.</p>
+              <p className="about-intro-text">Tailored sessions to match your vision, style, and preferences.</p>
             </div>
           </div>
           <div className="flex gap-3">
             <span className="w-7 h-7 shrink-0 bg-[#FFC93C] text-[#0B1226] rounded-full flex items-center justify-center font-bold">✓</span>
             <div>
               <h4 className="font-bold">High-Quality Results</h4>
-              <p className="text-sm text-gray-300">Carefully edited photos delivered in digital gallery with fast turnaround.</p>
+              <p className="about-intro-text">Carefully edited photos delivered in digital gallery with fast turnaround.</p>
             </div>
           </div>
         </div>
